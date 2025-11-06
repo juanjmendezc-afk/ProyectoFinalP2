@@ -1,18 +1,33 @@
 package co.edu.uniquindio.proyectofinalp2.repositories;
 
+import co.edu.uniquindio.proyectofinalp2.models.Cliente;
+import co.edu.uniquindio.proyectofinalp2.models.Pedido;
+import co.edu.uniquindio.proyectofinalp2.models.Producto;
 import co.edu.uniquindio.proyectofinalp2.models.User;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class Database {
-    private List<User> usuarios;
-    private User usuarioActivo; // ← SESIÓN ACTIVA
+
+    private ArrayList<User> listaUsuarios = new ArrayList<>();
+    private ArrayList<Cliente> listaClientes = new ArrayList<>();
+    private ArrayList<Producto> listaProductos = new ArrayList<>();
+    private ArrayList<Pedido> listaPedidos = new ArrayList<>();
+
     private static Database instancia;
 
-    // Patrón Singleton
     private Database() {
-        this.usuarios = new ArrayList<>();
-        cargarDatosPrueba();
+
+        User admin = new User(
+                "U1",
+                "Admin",
+                "admin@gmail.com",
+                "12345",
+                "3000000000",
+                "ADMIN"
+        );
+
+        listaUsuarios.add(admin);
     }
 
     public static Database getInstancia() {
@@ -22,56 +37,45 @@ public class Database {
         return instancia;
     }
 
-    private void cargarDatosPrueba() {
-        // Datos de prueba
-        usuarios.add(new User("U001", "Juan Pérez", "juan@email.com", "1234", "3001234567", "USUARIO"));
-        usuarios.add(new User("U002", "María García", "maria@email.com", "5678", "3009876543", "USUARIO"));
-        usuarios.add(new User("A001", "Administrador", "admin@email.com", "admin", "3001112233", "ADMIN"));
-
-        System.out.println("Datos cargados: " + usuarios.size() + " usuarios");
+    public void agregarUsuario(User u) {
+        listaUsuarios.add(u);
     }
 
-    // Método para validar login (REEMPLAZA a Autenticador)
-    public boolean autenticar(String email, String password) {
-        for (User usuario : usuarios) {
-            if (usuario.validarCredenciales(email, password)) {
-                this.usuarioActivo = usuario; // Guardar sesión
-                System.out.println("Login exitoso: " + usuario.getEmail());
+    public ArrayList<User> listarUsuarios() {
+        return listaUsuarios;
+    }
+
+    public boolean validarLogin(String email, String password) {
+        for (User u : listaUsuarios) {
+            if (u.getEmail().equalsIgnoreCase(email)
+                    && u.getPassword().equals(password)) {
                 return true;
             }
         }
-        System.out.println("Login fallido para: " + email);
         return false;
     }
 
-    // Obtener usuario activo
-    public User getUsuarioActivo() {
-        return usuarioActivo;
+    public void agregarCliente(Cliente c) {
+        listaClientes.add(c);
     }
 
-    // Cerrar sesión
-    public void cerrarSesion() {
-        System.out.println("Cerrando sesión de: " + (usuarioActivo != null ? usuarioActivo.getEmail() : "ninguno"));
-        this.usuarioActivo = null;
+    public ArrayList<Cliente> listarClientes() {
+        return listaClientes;
     }
 
-    // Verificar si hay sesión activa
-    public boolean estaAutenticado() {
-        return usuarioActivo != null;
+    public void agregarProducto(Producto p) {
+        listaProductos.add(p);
     }
 
-    // Verificar si es admin
-    public boolean esAdmin() {
-        return estaAutenticado() && "ADMIN".equals(usuarioActivo.getTipo());
+    public ArrayList<Producto> listarProductos() {
+        return listaProductos;
     }
 
-    // Para registro de nuevos usuarios
-    public void agregarUsuario(User usuario) {
-        usuarios.add(usuario);
-        System.out.println("Usuario registrado: " + usuario.getEmail());
+    public void agregarPedido(Pedido p) {
+        listaPedidos.add(p);
     }
 
-    public List<User> getUsuarios() {
-        return new ArrayList<>(usuarios);
+    public ArrayList<Pedido> listarPedidos() {
+        return listaPedidos;
     }
 }
