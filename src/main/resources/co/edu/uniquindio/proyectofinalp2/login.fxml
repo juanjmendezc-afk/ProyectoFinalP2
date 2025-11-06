@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
+<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/11.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="co.edu.uniquindio.proyectofinalp2.controllers.LoginController"
+      style="-fx-background-color: #f5f5f5; -fx-padding: 40;">
 
-</AnchorPane>
+    <Label text="Sistema de Logística"
+           style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+    <Label text="Iniciar Sesión"
+           style="-fx-font-size: 18; -fx-text-fill: #34495e;"/>
+
+    <!-- Panel de login -->
+    <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;">
+
+        <Label text="Email:" style="-fx-font-weight: bold;"/>
+        <TextField fx:id="txtEmail"
+                   promptText="Ingrese su email"
+                   style="-fx-pref-width: 250;"/>
+
+        <Label text="Contraseña:" style="-fx-font-weight: bold;"/>
+        <PasswordField fx:id="txtPassword"
+                       promptText="Ingrese su contraseña"
+                       style="-fx-pref-width: 250;"/>
+
+        <Button fx:id="btnLogin"
+                text="Ingresar"
+                defaultButton="true"
+                style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 250;"/>
+
+        <Label fx:id="lblMensaje"
+               style="-fx-font-weight: bold; -fx-padding: 10 0 0 0;"
+               wrapText="true"/>
+
+    </VBox>
+
+    <Label text="Versión 1.0 - PGII 20252"
+           style="-fx-text-fill: #7f8c8d; -fx-font-size: 10;"/>
+    <Button text="Registrarse"
+            onAction="#mostrarPantallaRegistro"
+            style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;"/>
+</VBox>
