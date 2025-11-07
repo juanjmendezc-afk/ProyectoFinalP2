@@ -1,26 +1,43 @@
 package co.edu.uniquindio.proyectofinalp2.estructural;
 
-import co.edu.uniquindio.proyectofinalp2.models.*;
+import co.edu.uniquindio.proyectofinalp2.models.User;
 import co.edu.uniquindio.proyectofinalp2.repositories.Database;
-import co.edu.uniquindio.proyectofinalp2.creacional.UserFactory;
-import co.edu.uniquindio.proyectofinalp2.creacional.PedidoBuilder;
 
 public class SistemaLogisticaFacade {
 
-    private Database db = Database.getInstancia();
+    private static SistemaLogisticaFacade instancia;
+    private final Database db;
 
-
-    public boolean login(String email, String password) {
-        return db.validarLogin(email, password);
+    private SistemaLogisticaFacade() {
+        db = Database.getInstancia();
     }
 
-    public User registrarUsuario(String nombre, String email, String pass, String telefono, String rol) {
+    public static SistemaLogisticaFacade getInstancia() {
+        if (instancia == null) {
+            instancia = new SistemaLogisticaFacade();
+        }
+        return instancia;
+    }
+
+    // Devuelve el usuario si existe o null
+    public User login(String email, String password) {
+        return db.obtenerUsuario(email, password);
+    }
+
+    // Registrar un nuevo usuario
+    public boolean registrarUsuario(String nombre, String email, String telefono, String password, String rol) {
+
+        User existente = db.obtenerUsuarioPorEmail(email);
+        if (existente != null) {
+            return false;
+        }
 
         String id = "U" + (db.listarUsuarios().size() + 1);
-        User u = UserFactory.crearUsuario(id, nombre, email, pass, telefono, rol);
 
-        db.agregarUsuario(u);
+        // Constructor correcto (6 parámetros)
+        User nuevo = new User(id, nombre, email, password, telefono, rol);
 
-        return u;
+        db.agregarUsuario(nuevo);
+        return true;
     }
 }

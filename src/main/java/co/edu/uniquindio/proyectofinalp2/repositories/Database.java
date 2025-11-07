@@ -1,33 +1,26 @@
 package co.edu.uniquindio.proyectofinalp2.repositories;
 
-import co.edu.uniquindio.proyectofinalp2.models.Cliente;
-import co.edu.uniquindio.proyectofinalp2.models.Pedido;
-import co.edu.uniquindio.proyectofinalp2.models.Producto;
 import co.edu.uniquindio.proyectofinalp2.models.User;
-
 import java.util.ArrayList;
 
 public class Database {
 
-    private ArrayList<User> listaUsuarios = new ArrayList<>();
-    private ArrayList<Cliente> listaClientes = new ArrayList<>();
-    private ArrayList<Producto> listaProductos = new ArrayList<>();
-    private ArrayList<Pedido> listaPedidos = new ArrayList<>();
-
     private static Database instancia;
 
+    private ArrayList<User> usuarios;
+
     private Database() {
+        usuarios = new ArrayList<>();
 
-        User admin = new User(
-                "U1",
-                "Admin",
+        // Usuario administrador por defecto
+        usuarios.add(new User(
+                "A1",
+                "Administrador",
                 "admin@gmail.com",
-                "12345",
-                "3000000000",
+                "0000",
+                "0000000",
                 "ADMIN"
-        );
-
-        listaUsuarios.add(admin);
+        ));
     }
 
     public static Database getInstancia() {
@@ -37,45 +30,34 @@ public class Database {
         return instancia;
     }
 
-    public void agregarUsuario(User u) {
-        listaUsuarios.add(u);
-    }
-
-    public ArrayList<User> listarUsuarios() {
-        return listaUsuarios;
-    }
-
-    public boolean validarLogin(String email, String password) {
-        for (User u : listaUsuarios) {
-            if (u.getEmail().equalsIgnoreCase(email)
-                    && u.getPassword().equals(password)) {
-                return true;
+    // Buscar usuario por email y contraseña
+    public User obtenerUsuario(String email, String password) {
+        for (User u : usuarios) {
+            if (u.getEmail().equalsIgnoreCase(email) &&
+                    u.getPassword().equals(password)) {
+                return u;
             }
         }
-        return false;
+        return null;
     }
 
-    public void agregarCliente(Cliente c) {
-        listaClientes.add(c);
+    // Buscar usuario por email
+    public User obtenerUsuarioPorEmail(String email) {
+        for (User u : usuarios) {
+            if (u.getEmail().equalsIgnoreCase(email)) {
+                return u;
+            }
+        }
+        return null;
     }
 
-    public ArrayList<Cliente> listarClientes() {
-        return listaClientes;
+    // Agregar usuario
+    public void agregarUsuario(User user) {
+        usuarios.add(user);
     }
 
-    public void agregarProducto(Producto p) {
-        listaProductos.add(p);
-    }
-
-    public ArrayList<Producto> listarProductos() {
-        return listaProductos;
-    }
-
-    public void agregarPedido(Pedido p) {
-        listaPedidos.add(p);
-    }
-
-    public ArrayList<Pedido> listarPedidos() {
-        return listaPedidos;
+    // Listar usuarios
+    public ArrayList<User> listarUsuarios() {
+        return usuarios;
     }
 }

@@ -2,55 +2,48 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/11.0.1"
+<VBox alignment="CENTER" spacing="20"
+      xmlns="http://javafx.com/javafx/11.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="co.edu.uniquindio.proyectofinalp2.controllers.LoginController"
+      fx:controller="co.edu.uniquindio.proyectofinalp2.controllers.RegistroController"
       style="-fx-background-color: #f5f5f5; -fx-padding: 30;">
 
     <Label text="Registro de Usuario"
-           style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+           style="-fx-font-size: 24; -fx-font-weight: bold;"/>
 
-    <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;">
+    <VBox spacing="15"
+          style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;">
 
-        <Label text="Nombre Completo:" style="-fx-font-weight: bold;"/>
-        <TextField fx:id="txtNombreRegistro"
-                   promptText="Ingrese su nombre completo"
-                   style="-fx-pref-width: 300;"/>
+        <Label text="Nombre Completo:"/>
+        <TextField fx:id="txtNombreRegistro" prefWidth="300"/>
 
-        <Label text="Email:" style="-fx-font-weight: bold;"/>
-        <TextField fx:id="txtEmailRegistro"
-                   promptText="Ingrese su email"
-                   style="-fx-pref-width: 300;"/>
+        <Label text="Email:"/>
+        <TextField fx:id="txtEmailRegistro" prefWidth="300"/>
 
-        <Label text="Teléfono:" style="-fx-font-weight: bold;"/>
-        <TextField fx:id="txtTelefonoRegistro"
-                   promptText="Ingrese su teléfono"
-                   style="-fx-pref-width: 300;"/>
+        <Label text="Teléfono:"/>
+        <TextField fx:id="txtTelefonoRegistro" prefWidth="300"/>
 
-        <Label text="Contraseña:" style="-fx-font-weight: bold;"/>
-        <PasswordField fx:id="txtPasswordRegistro"
-                       promptText="Ingrese su contraseña"
-                       style="-fx-pref-width: 300;"/>
+        <Label text="Rol:"/>
+        <ComboBox fx:id="comboRol" prefWidth="300"/>
 
-        <Label text="Confirmar Contraseña:" style="-fx-font-weight: bold;"/>
-        <PasswordField fx:id="txtConfirmarPassword"
-                       promptText="Confirme su contraseña"
-                       style="-fx-pref-width: 300;"/>
+        <Label text="Contraseña:"/>
+        <PasswordField fx:id="txtPasswordRegistro" prefWidth="300"/>
 
-        <HBox spacing="10" alignment="CENTER">
-            <Button fx:id="btnRegistrar"
-                    text="Registrarse"
-                    style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;"/>
-            <Button fx:id="btnVolverLogin"
-                    text="Volver al Login"
-                    style="-fx-background-color: #95a5a6; -fx-text-fill: white;"/>
+        <Label text="Confirmar Contraseña:"/>
+        <PasswordField fx:id="txtConfirmarPassword" prefWidth="300"/>
+
+        <HBox alignment="CENTER" spacing="10">
+            <Button text="Registrarse"
+                    onAction="#registrarUsuario"
+                    style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+
+            <Button text="Volver"
+                    onAction="#volverAlLogin"
+                    style="-fx-background-color: #7f8c8d; -fx-text-fill: white;"/>
         </HBox>
 
-        <Label fx:id="lblMensajeRegistro"
-               style="-fx-font-weight: bold; -fx-padding: 10 0 0 0;"
-               wrapText="true"/>
-
+        <Label fx:id="lblMensajeRegistro" style="-fx-text-fill: red;"/>
     </VBox>
+
 </VBox>
