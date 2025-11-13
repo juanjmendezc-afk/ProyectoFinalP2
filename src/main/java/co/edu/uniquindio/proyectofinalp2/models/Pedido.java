@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class Pedido {
 
     private String codigo;
-    private Cliente cliente;
+    private User cliente;
     private ArrayList<Producto> productos;
     private String direccionEntrega;
     private double costo;
     private String estado;
 
-    public Pedido(String codigo, Cliente cliente, ArrayList<Producto> productos,
+    public Pedido(String codigo, User cliente, ArrayList<Producto> productos,
                   String direccionEntrega, double costo, String estado) {
 
         this.codigo = codigo;
@@ -26,7 +26,7 @@ public class Pedido {
         return codigo;
     }
 
-    public Cliente getCliente() {
+    public User getCliente() {
         return cliente;
     }
 

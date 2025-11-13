@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" spacing="20" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="co.edu.uniquindio.proyectofinalp2.controllers.ReportesAdminController">
-
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.uniquindio.proyectofinalp2.controllers.ReportesAdminController"
+      spacing="15" alignment="CENTER">
     <padding>
-        <Insets top="40" bottom="40" left="40" right="40"/>
+        <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="REPORTES DEL SISTEMA" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+    <Label text="REPORTE DE ENVIOS" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
-    <Button text="Volver" onAction="#volver"/>
+    <TableView fx:id="tablaEnvios" prefHeight="300" prefWidth="600">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="100"/>
+            <TableColumn fx:id="colEstado" text="Estado" prefWidth="120"/>
+            <TableColumn fx:id="colPago" text="Pago" prefWidth="100"/>
+            <TableColumn fx:id="colRepartidor" text="Repartidor" prefWidth="150"/>
+            <TableColumn fx:id="colCliente" text="Cliente" prefWidth="150"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Generar Reporte CSV" onAction="#generarReporteCSV" />
+        <Button text="Volver" onAction="#volver" />
+    </HBox>
 </VBox>

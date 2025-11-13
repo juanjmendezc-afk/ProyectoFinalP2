@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.proyectofinalp2.controllers.RastrearEnvioController"
+            prefWidth="400" prefHeight="300">
+
+    <VBox spacing="15" alignment="CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+
+        <Label text="Rastreo de Envío"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+        <TextField fx:id="txtIdEnvio"
+                   promptText="Ingrese el ID del envío (Ej: E1)"
+                   style="-fx-pref-width: 250;"/>
+
+        <Button text="Buscar Envío"
+                onAction="#buscarEnvio"
+                style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+
+        <Label fx:id="lblResultado"
+               wrapText="true"
+               style="-fx-font-size: 14px; -fx-text-fill: #333;"/>
+
+        <Button text="Cerrar"
+                onAction="#cerrarVentana"
+                style="-fx-background-color: #ff5555; -fx-text-fill: white;"/>
+
+    </VBox>
+</AnchorPane>
