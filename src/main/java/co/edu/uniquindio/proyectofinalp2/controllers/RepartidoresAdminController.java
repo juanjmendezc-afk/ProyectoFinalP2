@@ -66,7 +66,11 @@ public class RepartidoresAdminController {
             return;
         }
 
+        seleccionado.setEstado("ACTIVO");
+        seleccionado.setRol("REPARTIDOR"); // ← CORRECCIÓN CLAVE
+
         db.aprobarRepartidor(seleccionado);
+
         mostrar("Solicitud aprobada correctamente.", "green");
 
         cargarTablas();
@@ -109,4 +113,3 @@ public class RepartidoresAdminController {
         }
     }
 }
-

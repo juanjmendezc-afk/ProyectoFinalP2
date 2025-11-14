@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.proyectofinalp2.controllers.MainRepartidorController"
+            prefWidth="900" prefHeight="500">
+
+    <top>
+        <Label text="Panel del Repartidor"
+               BorderPane.alignment="CENTER"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 15;"/>
+    </top>
+
+    <center>
+        <HBox spacing="15">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <!-- ================= TABLA DE ENVIOS ================= -->
+            <TableView fx:id="tablaEnvios" prefWidth="450" prefHeight="400">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="70"/>
+                    <TableColumn fx:id="colOrigen" text="Origen" prefWidth="150"/>
+                    <TableColumn fx:id="colDestino" text="Destino" prefWidth="150"/>
+                    <TableColumn fx:id="colEstado" text="Estado" prefWidth="100"/>
+                </columns>
+            </TableView>
+
+            <!-- =============== PANEL DETALLES =============== -->
+            <VBox spacing="10" prefWidth="350"
+                  style="-fx-background-color: #f1f1f1; -fx-padding: 15; -fx-background-radius: 12;">
+
+                <Label text="Detalles del Envío seleccionado"
+                       style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+                <Label text="ID:"/>
+                <Label fx:id="lblId"/>
+
+                <Label text="Origen:"/>
+                <Label fx:id="lblOrigen"/>
+
+                <Label text="Destino:"/>
+                <Label fx:id="lblDestino"/>
+
+                <Label text="Costo:"/>
+                <Label fx:id="lblCosto"/>
+
+                <Label text="Cliente:"/>
+                <Label fx:id="lblCliente"/>
+
+                <Label text="Estado:"/>
+                <Label fx:id="lblEstado"/>
+
+                <Separator/>
+
+                <VBox spacing="10">
+                    <Button text="Marcar EN CAMINO"
+                            onAction="#marcarEnCamino"
+                            style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+
+                    <Button text="Marcar ENTREGADO"
+                            onAction="#marcarEntregado"
+                            style="-fx-background-color: #2ecc71; -fx-text-fill: white;"/>
+
+                    <Button text="Reportar incidencia"
+                            onAction="#reportarProblema"
+                            style="-fx-background-color: #e67e22; -fx-text-fill: white;"/>
+                </VBox>
+
+            </VBox>
+
+        </HBox>
+    </center>
+
+    <bottom>
+        <Button text="Cerrar Sesión"
+                onAction="#cerrarSesion"
+                BorderPane.alignment="CENTER"
+                style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-padding: 10 20; margin: 10;"/>
+    </bottom>
+
+</BorderPane>

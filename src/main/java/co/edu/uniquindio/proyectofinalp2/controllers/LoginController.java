@@ -58,11 +58,24 @@ public class LoginController {
 
             Parent root = loader.load();
 
+            // 🔥 IMPORTANTE: ENVIAR USUARIO AL CONTROLADOR CORRESPONDIENTE
+            Object controller = loader.getController();
+
+            if (controller instanceof MainAdminController c1)
+                c1.setAdminActual(user);
+
+            if (controller instanceof MainRepartidorController c2)
+                c2.setRepartidorActual(user);
+
+            if (controller instanceof MainUserController c3)
+                c3.setUsuarioActual(user);
+
             Stage stage = (Stage) txtEmail.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
 
         } catch (Exception e) {
+            e.printStackTrace();
             lblMensaje.setText("Error cargando menú.");
         }
     }
