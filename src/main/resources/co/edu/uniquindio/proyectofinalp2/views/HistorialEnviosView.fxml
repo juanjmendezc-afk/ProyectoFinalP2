@@ -25,6 +25,11 @@
             </columns>
         </TableView>
 
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Exportar CSV" onAction="#exportarCSV"/>
+            <Button text="Exportar PDF" onAction="#exportarPDF"/>
+        </HBox>
+
         <Button text="Cerrar" onAction="#cerrarVentana"/>
     </VBox>
 

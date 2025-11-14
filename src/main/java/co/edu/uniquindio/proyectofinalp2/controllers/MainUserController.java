@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyectofinalp2.controllers;
 
+import co.edu.uniquindio.proyectofinalp2.models.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,55 +10,89 @@ import javafx.stage.Stage;
 
 /**
  * Controlador principal del menú del usuario.
- * - Cotizar envío
- * - Crear envío
- * - Rastrear paquete
- * - Ver historial
- * - Cerrar sesión
  */
 public class MainUserController {
 
     @FXML
     private Button btnCerrarSesion;
 
+    // 🔹 Usuario autenticado
+    private User usuarioActual;
+
+    // 🔹 Este método lo llamará el LoginController
+    public void setUsuarioActual(User usuario) {
+        this.usuarioActual = usuario;
+        System.out.println("Usuario recibido en MainUserController: " + usuario.getNombreCompleto());
+    }
+
     /**
-     * Abre la ventana del cotizador de envíos.
+     * Abrir cotizador.
      */
     @FXML
     private void abrirCotizador() {
-        abrirVentana("/co/edu/uniquindio/proyectofinalp2/views/CotizarEnvioView.fxml",
+        abrirVentanaSimple("/co/edu/uniquindio/proyectofinalp2/views/CotizarEnvioView.fxml",
                 "Cotizar envío");
     }
 
     /**
-     * Abre la ventana para crear un nuevo envío.
+     * Abrir crear envío enviando el usuario actual
      */
     @FXML
     private void abrirCrearEnvio() {
-        abrirVentana("/co/edu/uniquindio/proyectofinalp2/views/CrearEnvioView.fxml",
-                "Crear nuevo envío");
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/co/edu/uniquindio/proyectofinalp2/views/CrearEnvioView.fxml"));
+            Parent root = loader.load();
+
+            CrearEnvioController controller = loader.getController();
+            controller.setUsuarioActual(usuarioActual); // 🔹 Enviamos el usuario
+
+            Stage stage = new Stage();
+            stage.setTitle("Crear nuevo envío");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            System.out.println("Error al abrir Crear Envío");
+            e.printStackTrace();
+        }
     }
 
     /**
-     * Abre la vista de rastreo de paquetes.
+     * Abrir rastreo.
      */
     @FXML
     private void abrirRastreo() {
-        abrirVentana("/co/edu/uniquindio/proyectofinalp2/views/RastrearEnvioView.fxml",
+        abrirVentanaSimple("/co/edu/uniquindio/proyectofinalp2/views/RastrearEnvioView.fxml",
                 "Rastrear envío");
     }
 
     /**
-     * Abre la vista del historial de envíos.
+     * Abrir el historial, enviando usuarioActual
      */
     @FXML
     private void abrirHistorial() {
-        abrirVentana("/co/edu/uniquindio/proyectofinalp2/views/HistorialEnviosView.fxml",
-                "Historial de envíos");
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/co/edu/uniquindio/proyectofinalp2/views/HistorialEnviosView.fxml"));
+            Parent root = loader.load();
+
+            HistorialEnviosController controller = loader.getController();
+            controller.setUsuarioActual(usuarioActual); // 🔹 PASO IMPORTANTE
+
+            Stage stage = new Stage();
+            stage.setTitle("Historial de envíos");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            System.out.println("Error al abrir Historial");
+            e.printStackTrace();
+        }
     }
 
     /**
-     * Cierra la sesión actual y regresa al login principal.
+     * Cerrar sesión
      */
     @FXML
     private void cerrarSesion() {
@@ -71,19 +106,16 @@ public class MainUserController {
             stage.setTitle("Iniciar sesión");
             stage.show();
 
-            System.out.println(" Sesión cerrada correctamente.");
         } catch (Exception e) {
+            System.out.println("Error al regresar al login.");
             e.printStackTrace();
-            System.out.println(" Error al volver al login.");
         }
     }
 
     /**
-     * Método auxiliar para abrir ventanas de manera uniforme.
-     * @param rutaFXML Ruta del archivo FXML a cargar.
-     * @param titulo   Título de la nueva ventana.
+     * Método rápido para abrir ventanas que NO requieren usuarioActual.
      */
-    private void abrirVentana(String rutaFXML, String titulo) {
+    private void abrirVentanaSimple(String rutaFXML, String titulo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
             Parent root = loader.load();
@@ -93,10 +125,9 @@ public class MainUserController {
             stage.setScene(new Scene(root));
             stage.show();
 
-            System.out.println(" Ventana abierta correctamente: " + titulo);
         } catch (Exception e) {
+            System.out.println("Error al abrir la ventana: " + titulo);
             e.printStackTrace();
-            System.out.println(" Error al abrir la ventana: " + titulo);
         }
     }
 }

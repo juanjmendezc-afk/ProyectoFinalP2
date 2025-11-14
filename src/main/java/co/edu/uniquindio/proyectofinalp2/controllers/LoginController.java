@@ -14,19 +14,15 @@ import javafx.stage.Stage;
 
 public class LoginController {
 
-    @FXML
-    private TextField txtEmail;
-
-    @FXML
-    private PasswordField txtPassword;
-
-    @FXML
-    private Label lblMensaje;
+    @FXML private TextField txtEmail;
+    @FXML private PasswordField txtPassword;
+    @FXML private Label lblMensaje;
 
     private SistemaLogisticaFacade facade = SistemaLogisticaFacade.getInstancia();
 
     @FXML
     public void iniciarSesion(ActionEvent event) {
+
         String email = txtEmail.getText();
         String password = txtPassword.getText();
 
@@ -38,36 +34,36 @@ public class LoginController {
         User user = facade.login(email, password);
 
         if (user == null) {
-            lblMensaje.setText("Su correo o contraseña son incorrectos.");
+            lblMensaje.setText("Datos incorrectos o usuario no activo.");
+            return;
+        }
+
+        // Bloqueo de repartidor pendiente
+        if (user.getEstado().equals("PENDIENTE_APROBACION")) {
+            lblMensaje.setText("Su solicitud aún no ha sido aprobada.");
             return;
         }
 
         try {
-            String rol = user.getRol();
             FXMLLoader loader;
 
-            if (rol.equals("ADMIN")) {
-                loader = new FXMLLoader(
-                        getClass().getResource("/co/edu/uniquindio/proyectofinalp2/views/MainAdminView.fxml")
-                );
-            } else if (rol.equals("USER")) {
-                loader = new FXMLLoader(
-                        getClass().getResource("/co/edu/uniquindio/proyectofinalp2/views/MainUserView.fxml")
-                );
-            } else {
-                loader = new FXMLLoader(
-                        getClass().getResource("/co/edu/uniquindio/proyectofinalp2/views/RepartidoresAdminView.fxml")
-                );
+            switch (user.getRol()) {
+                case "ADMIN" -> loader = new FXMLLoader(
+                        getClass().getResource("/co/edu/uniquindio/proyectofinalp2/views/MainAdminView.fxml"));
+                case "REPARTIDOR" -> loader = new FXMLLoader(
+                        getClass().getResource("/co/edu/uniquindio/proyectofinalp2/views/MainRepartidorView.fxml"));
+                default -> loader = new FXMLLoader(
+                        getClass().getResource("/co/edu/uniquindio/proyectofinalp2/views/MainUserView.fxml"));
             }
 
             Parent root = loader.load();
+
             Stage stage = (Stage) txtEmail.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
 
         } catch (Exception e) {
-            e.printStackTrace();
-            lblMensaje.setText("No se pudo cargar la vista del rol.");
+            lblMensaje.setText("Error cargando menú.");
         }
     }
 
@@ -77,7 +73,6 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/co/edu/uniquindio/proyectofinalp2/registro.fxml")
             );
-
             Parent root = loader.load();
 
             Stage stage = (Stage) txtEmail.getScene().getWindow();

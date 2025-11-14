@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.proyectofinalp2.controllers.RepartidoresAdminController"
+            prefWidth="800" prefHeight="500">
+
+    <top>
+        <Label text="Gestión de Repartidores"
+               BorderPane.alignment="CENTER"
+               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-padding: 15;"/>
+    </top>
+
+    <center>
+        <HBox spacing="20" padding="20">
+
+            <!-- ================= TABLA DE REPARTIDORES ACTIVOS ================= -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                <Label text="Repartidores Activos"
+                       style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+                <TableView fx:id="tablaRepartidores" prefHeight="300">
+                    <columns>
+                        <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                        <TableColumn fx:id="colNombre" text="Nombre" prefWidth="180"/>
+                        <TableColumn fx:id="colEmail" text="Email" prefWidth="180"/>
+                        <TableColumn fx:id="colTelefono" text="Teléfono" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- ================= TABLA DE SOLICITUDES ================= -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                <Label text="Solicitudes de Repartidor"
+                       style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+                <TableView fx:id="tablaSolicitudes" prefHeight="250">
+                    <columns>
+                        <TableColumn fx:id="colSNombre" text="Nombre" prefWidth="180"/>
+                        <TableColumn fx:id="colSEmail" text="Email" prefWidth="180"/>
+                        <TableColumn fx:id="colSTelefono" text="Teléfono" prefWidth="120"/>
+                    </columns>
+                </TableView>
+
+                <HBox spacing="10">
+                    <Button text="Aprobar"
+                            style="-fx-background-color: #27ae60; -fx-text-fill: white;"
+                            onAction="#aprobarSolicitud"/>
+
+                    <Button text="Rechazar"
+                            style="-fx-background-color: #c0392b; -fx-text-fill: white;"
+                            onAction="#rechazarSolicitud"/>
+                </HBox>
+
+                <Label fx:id="lblMensaje" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            </VBox>
+
+        </HBox>
+    </center>
+
+    <bottom>
+        <Button text="Volver al Menú"
+                onAction="#volver"
+                BorderPane.alignment="CENTER"
+                style="-fx-background-color: #7f8c8d; -fx-text-fill: white; -fx-padding: 10 20; margin: 10;"/>
+    </bottom>
+
+</BorderPane>

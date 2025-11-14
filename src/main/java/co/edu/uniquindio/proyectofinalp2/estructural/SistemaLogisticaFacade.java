@@ -2,57 +2,62 @@ package co.edu.uniquindio.proyectofinalp2.estructural;
 
 import co.edu.uniquindio.proyectofinalp2.models.User;
 import co.edu.uniquindio.proyectofinalp2.repositories.Database;
-import co.edu.uniquindio.proyectofinalp2.creacional.UserFactory;
 
-/**
- * Patrón Facade: expone métodos simples para interactuar
- * con el sistema sin conocer la lógica interna.
- */
 public class SistemaLogisticaFacade {
 
     private static SistemaLogisticaFacade instancia;
-    private final Database db;
+    private final Database db = Database.getInstancia();
 
-    private SistemaLogisticaFacade() {
-        db = Database.getInstancia();
-    }
+    private SistemaLogisticaFacade() {}
 
     public static SistemaLogisticaFacade getInstancia() {
-        if (instancia == null) {
-            instancia = new SistemaLogisticaFacade();
-        }
+        if (instancia == null) instancia = new SistemaLogisticaFacade();
         return instancia;
     }
 
-    /**
-     * Inicia sesión verificando usuario y contraseña.
-     * @return el usuario si existe o null si no se encuentra.
-     */
+    // =============================
+    // LOGIN
+    // =============================
     public User login(String email, String password) {
         return db.obtenerUsuario(email, password);
     }
 
-    /**
-     * Registra un nuevo usuario (usa el patrón Factory).
-     * @param nombre nombre completo
-     * @param email correo
-     * @param telefono teléfono
-     * @param password contraseña
-     * @param rol rol del usuario ("ADMIN", "USER", "REPARTIDOR")
-     * @return true si se registró correctamente, false si ya existe el email.
-     */
-    public boolean registrarUsuario(String nombre, String email, String telefono, String password, String rol) {
+    // =============================
+    // REGISTRO DE USUARIO (ACTUALIZADO)
+    // =============================
+    public boolean registrarUsuario(
+            String nombre,
+            String email,
+            String telefono,
+            String password,
+            String rol,
+            String tipoId,
+            String numeroId,
+            String estado
+    ) {
 
-        // Verificar si ya existe un usuario con ese correo
-        User existente = db.obtenerUsuarioPorEmail(email);
-        if (existente != null) {
+        // Verificar si el email ya existe
+        if (db.obtenerUsuarioPorEmail(email) != null) {
             return false;
         }
 
-        //  Aquí aplicamos el patrón Factory
-        User nuevo = UserFactory.crearUsuario(nombre, email, telefono, password, rol);
+        // Generar ID automático
+        String id = "U" + (db.listarUsuarios().size() + db.listarSolicitudes().size() + 1);
+
+        User nuevo = new User(
+                id,
+                nombre,
+                email,
+                password,
+                telefono,
+                rol,
+                tipoId,
+                numeroId,
+                estado
+        );
 
         db.agregarUsuario(nuevo);
+
         return true;
     }
 }

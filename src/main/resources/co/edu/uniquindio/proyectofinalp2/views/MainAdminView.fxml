@@ -12,11 +12,16 @@
         <Insets top="40" bottom="40" left="40" right="40"/>
     </padding>
 
-    <Label text="PANEL DEL ADMINISTRADOR" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <Label text="PANEL DEL ADMINISTRADOR"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
 
     <Button text="Gestionar Usuarios" onAction="#abrirGestionUsuarios"/>
+
+    <!-- ✔ Aquí se gestionan repartidores Y solicitudes -->
     <Button text="Gestionar Repartidores" onAction="#abrirGestionRepartidores"/>
-    <Button text="Gestionar Envíos" onAction="#abrirGestionEnvios"/>
+
+    <Button text="Asignar Envíos" onAction="#abrirAsignarEnvios"/>
+
     <Button text="Reportes" onAction="#abrirReportes"/>
 
     <Button text="Cerrar Sesión"

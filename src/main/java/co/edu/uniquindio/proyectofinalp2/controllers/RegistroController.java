@@ -14,47 +14,41 @@ import javafx.stage.Stage;
 
 public class RegistroController {
 
-    @FXML
-    private TextField txtNombreRegistro;
-
-    @FXML
-    private TextField txtEmailRegistro;
-
-    @FXML
-    private TextField txtTelefonoRegistro;
-
-    @FXML
-    private ComboBox<String> comboRol;
-
-    @FXML
-    private PasswordField txtPasswordRegistro;
-
-    @FXML
-    private PasswordField txtConfirmarPassword;
-
-    @FXML
-    private Label lblMensajeRegistro;
+    @FXML private TextField txtNombreRegistro;
+    @FXML private TextField txtEmailRegistro;
+    @FXML private TextField txtTelefonoRegistro;
+    @FXML private ComboBox<String> comboRol;
+    @FXML private ComboBox<String> comboTipoId;
+    @FXML private TextField txtNumeroId;
+    @FXML private PasswordField txtPasswordRegistro;
+    @FXML private PasswordField txtConfirmarPassword;
+    @FXML private Label lblMensajeRegistro;
 
     private SistemaLogisticaFacade facade = SistemaLogisticaFacade.getInstancia();
 
     @FXML
     public void initialize() {
-        // Cargar roles
-        comboRol.getItems().add("Usuario");
-        comboRol.getItems().add("Repartidor");
+        comboRol.getItems().addAll("Usuario", "Repartidor");
+        comboTipoId.getItems().addAll("CC", "TI", "CE");
     }
 
     @FXML
     public void registrarUsuario(ActionEvent event) {
+
         String nombre = txtNombreRegistro.getText();
         String email = txtEmailRegistro.getText();
         String telefono = txtTelefonoRegistro.getText();
         String pass = txtPasswordRegistro.getText();
         String confirmar = txtConfirmarPassword.getText();
-        String rolSeleccionado = comboRol.getValue();
+        String rol = comboRol.getValue();
 
-        if (nombre.isEmpty() || email.isEmpty() || telefono.isEmpty()
-                || pass.isEmpty() || confirmar.isEmpty() || rolSeleccionado == null) {
+        String tipoId = comboTipoId.getValue();
+        String numeroId = txtNumeroId.getText();
+
+        if (nombre.isEmpty() || email.isEmpty() || telefono.isEmpty() ||
+                pass.isEmpty() || confirmar.isEmpty() || rol == null ||
+                tipoId == null || numeroId.isEmpty()) {
+
             lblMensajeRegistro.setText("Debe completar todos los campos.");
             return;
         }
@@ -64,16 +58,28 @@ public class RegistroController {
             return;
         }
 
-        String rolReal = rolSeleccionado.equals("Usuario") ? "USER" : "REPARTIDOR";
+        String rolReal = rol.equals("Usuario") ? "USER" : "REPARTIDOR";
+        String estado = rolReal.equals("REPARTIDOR")
+                ? "PENDIENTE_APROBACION"
+                : "ACTIVO";
 
-        boolean registrado = facade.registrarUsuario(nombre, email, telefono, pass, rolReal);
+        boolean registrado = facade.registrarUsuario(
+                nombre, email, telefono, pass, rolReal,
+                tipoId, numeroId, estado
+        );
 
-        if (registrado) {
-            lblMensajeRegistro.setText("Usuario registrado correctamente.");
-            volverAlLogin(event);
-        } else {
+        if (!registrado) {
             lblMensajeRegistro.setText("El email ya está registrado.");
+            return;
         }
+
+        lblMensajeRegistro.setText(
+                rolReal.equals("REPARTIDOR")
+                        ? "Solicitud enviada. Espere aprobación del administrador."
+                        : "Usuario registrado correctamente."
+        );
+
+        volverAlLogin(event);
     }
 
     @FXML

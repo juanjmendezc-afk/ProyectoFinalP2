@@ -1,80 +1,46 @@
 package co.edu.uniquindio.proyectofinalp2.repositories;
 
-import co.edu.uniquindio.proyectofinalp2.models.User;
-import co.edu.uniquindio.proyectofinalp2.models.Envio;
-import co.edu.uniquindio.proyectofinalp2.models.EstadoEnvio;
-import co.edu.uniquindio.proyectofinalp2.models.Direccion;
+import co.edu.uniquindio.proyectofinalp2.models.*;
+
 import java.util.ArrayList;
 
 public class Database {
 
-    // Instancia única (Singleton)
     private static Database instancia;
 
-    // Listas simuladas de usuarios y envíos
     private ArrayList<User> usuarios;
+    private ArrayList<User> solicitudesRepartidor;
     private ArrayList<Envio> listaEnvios;
+    private ArrayList<Pedido> listaPedidos;
 
-    // Constructor privado
     private Database() {
+
         usuarios = new ArrayList<>();
+        solicitudesRepartidor = new ArrayList<>();
         listaEnvios = new ArrayList<>();
+        listaPedidos = new ArrayList<>();
 
-        // ===== Usuario administrador por defecto =====
+        // Admin por defecto
         usuarios.add(new User(
-                "A1",
-                "Administrador",
-                "admin@gmail.com",
-                "0000",
-                "0000000",
-                "ADMIN"
+                "A1", "Administrador", "admin@gmail.com", "0000",
+                "0000000", "ADMIN",
+                "CC", "1111111",
+                "ACTIVO"
         ));
-
-        // ===== Datos de ejemplo =====
-
-        // Crear clientes
-        User cliente1 = new User("C1", "Juan Pérez", "juan@gmail.com", "1234", "3100000000", "CLIENTE");
-        User cliente2 = new User("C2", "María Gómez", "maria@gmail.com", "1234", "3200000000", "CLIENTE");
-
-        // Crear repartidores
-        User repartidor1 = new User("R1", "Carlos López", "carlos@gmail.com", "1234", "3150000000", "REPARTIDOR");
-        User repartidor2 = new User("R2", "Ana Ruiz", "ana@gmail.com", "1234", "3160000000", "REPARTIDOR");
-
-        // Agregar usuarios a la lista
-        usuarios.add(cliente1);
-        usuarios.add(cliente2);
-        usuarios.add(repartidor1);
-        usuarios.add(repartidor2);
-
-        // Direcciones simples
-        Direccion origen1 = new Direccion("Calle 10 #5-23", "Armenia");
-        Direccion destino1 = new Direccion("Carrera 7 #45-10", "Cali");
-
-        Direccion origen2 = new Direccion("Av. Bolívar 120", "Armenia");
-        Direccion destino2 = new Direccion("Calle 40 #12-30", "Medellín");
-
-        // ===== Envíos de prueba =====
-        Envio envio1 = new Envio("E001", origen1, destino1, repartidor1, EstadoEnvio.PENDIENTE, 25000.0);
-        Envio envio2 = new Envio("E002", origen2, destino2, repartidor2, EstadoEnvio.EN_CAMINO, 32000.0);
-        Envio envio3 = new Envio("E003", origen1, destino2, repartidor1, EstadoEnvio.ENTREGADO, 40000.0);
-
-        listaEnvios.add(envio1);
-        listaEnvios.add(envio2);
-        listaEnvios.add(envio3);
     }
 
-    // ===== Singleton =====
     public static Database getInstancia() {
-        if (instancia == null) {
-            instancia = new Database();
-        }
+        if (instancia == null) instancia = new Database();
         return instancia;
     }
 
-    // ===== Usuarios =====
+    // ============= USUARIOS =============
+
     public User obtenerUsuario(String email, String password) {
         for (User u : usuarios) {
-            if (u.getEmail().equalsIgnoreCase(email) && u.getPassword().equals(password)) {
+            if (u.getEmail().equalsIgnoreCase(email)
+                    && u.getPassword().equals(password)
+                    && u.getEstado().equals("ACTIVO")) {
                 return u;
             }
         }
@@ -82,51 +48,49 @@ public class Database {
     }
 
     public User obtenerUsuarioPorEmail(String email) {
+
         for (User u : usuarios) {
-            if (u.getEmail().equalsIgnoreCase(email)) {
-                return u;
-            }
+            if (u.getEmail().equalsIgnoreCase(email)) return u;
         }
+
+        for (User u : solicitudesRepartidor) {
+            if (u.getEmail().equalsIgnoreCase(email)) return u;
+        }
+
         return null;
     }
 
     public void agregarUsuario(User user) {
+
+        if (user.getEstado().equals("PENDIENTE_APROBACION")) {
+            solicitudesRepartidor.add(user);
+        } else {
+            usuarios.add(user);
+        }
+    }
+
+    public ArrayList<User> listarUsuarios() { return usuarios; }
+
+    public ArrayList<User> listarSolicitudes() { return solicitudesRepartidor; }
+
+    public void aprobarRepartidor(User user) {
+        user.setEstado("ACTIVO");
+        solicitudesRepartidor.remove(user);
         usuarios.add(user);
     }
 
-    public ArrayList<User> listarUsuarios() {
-        return usuarios;
+    public void rechazarRepartidor(User user) {
+        solicitudesRepartidor.remove(user);
     }
 
-    // ===== Envíos =====
-    public ArrayList<Envio> getListaEnvios() {
-        return listaEnvios;
-    }
+    // ============= PEDIDOS Y ENVIOS =============
 
-    public void setListaEnvios(ArrayList<Envio> listaEnvios) {
-        this.listaEnvios = listaEnvios;
-    }
+    public void agregarPedido(Pedido p) { listaPedidos.add(p); }
 
-    public void agregarEnvio(Envio envio) {
-        listaEnvios.add(envio);
-    }
+    public ArrayList<Pedido> getListaPedidos() { return listaPedidos; }
 
-    public Envio obtenerEnvioPorId(String idEnvio) {
-        for (Envio e : listaEnvios) {
-            if (e.getId().equals(idEnvio)) {
-                return e;
-            }
-        }
-        return null;
-    }
+    public void agregarEnvio(Envio e) { listaEnvios.add(e); }
 
-    public void actualizarEnvio(Envio envioActualizado) {
-        for (int i = 0; i < listaEnvios.size(); i++) {
-            Envio actual = listaEnvios.get(i);
-            if (actual.getId().equals(envioActualizado.getId())) {
-                listaEnvios.set(i, envioActualizado);
-                return;
-            }
-        }
-    }
+    public ArrayList<Envio> getListaEnvios() { return listaEnvios; }
 }
+

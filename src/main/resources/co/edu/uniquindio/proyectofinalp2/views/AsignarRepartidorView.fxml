@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefWidth="600" prefHeight="400" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.proyectofinalp2.controllers.AsignarRepartidorController">
+
+    <children>
+
+        <Label layoutX="20" layoutY="20" text="Envíos pendientes:" style="-fx-font-size: 16;" />
+
+        <TableView fx:id="tablaEnvios" layoutX="20" layoutY="50" prefWidth="560" prefHeight="200">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+                <TableColumn fx:id="colOrigen" text="Origen" prefWidth="160"/>
+                <TableColumn fx:id="colDestino" text="Destino" prefWidth="160"/>
+                <TableColumn fx:id="colCosto" text="Costo" prefWidth="100"/>
+            </columns>
+        </TableView>
+
+        <Label layoutX="20" layoutY="270" text="Seleccionar repartidor:"/>
+
+        <ComboBox fx:id="comboRepartidores" layoutX="160" layoutY="266" prefWidth="200"/>
+
+        <Button text="Asignar" layoutX="400" layoutY="265" onAction="#asignarRepartidor" />
+
+        <Label fx:id="lblMensaje" layoutX="20" layoutY="310" style="-fx-font-weight: bold;"/>
+
+        <!-- 🔙 BOTÓN VOLVER AL MENÚ ADMIN -->
+        <Button text="Volver al Menú"
+                layoutX="20"
+                layoutY="350"
+                prefWidth="150"
+                onAction="#volver"
+                style="-fx-background-color: #dddddd; -fx-font-weight: bold;"/>
+
+    </children>
+</AnchorPane>

@@ -12,7 +12,9 @@
         <Insets top="40" bottom="40" left="40" right="40"/>
     </padding>
 
-    <Label text="GESTIÓN DE USUARIOS" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+    <Label text="GESTIÓN DE USUARIOS"
+           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
     <Button text="Volver" onAction="#volver"/>
+
 </VBox>

@@ -24,6 +24,12 @@
         <Label text="Teléfono:"/>
         <TextField fx:id="txtTelefonoRegistro" prefWidth="300"/>
 
+        <Label text="Tipo de Identificación:"/>
+        <ComboBox fx:id="comboTipoId" prefWidth="300"/>
+
+        <Label text="Número de Identificación:"/>
+        <TextField fx:id="txtNumeroId" prefWidth="300"/>
+
         <Label text="Rol:"/>
         <ComboBox fx:id="comboRol" prefWidth="300"/>
 

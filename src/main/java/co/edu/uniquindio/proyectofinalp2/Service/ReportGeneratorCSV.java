@@ -7,44 +7,34 @@ import java.util.ArrayList;
 
 public class ReportGeneratorCSV {
 
-    public void generarReporte(ArrayList<Envio> listaEnvios) {
-        String nombreArchivo = "reporte_envios.csv";
+    public void generarReporte(ArrayList<Envio> listaEnvios, String nombreArchivo) {
 
         try (FileWriter writer = new FileWriter(nombreArchivo)) {
-            // Encabezado
+
+            // Encabezado del archivo CSV
             writer.write("ID;Estado;Pago;Repartidor;Cliente\n");
 
-            // Escribir los datos de cada envío
+            // Escribir cada envío
             for (Envio envio : listaEnvios) {
                 writer.write(formatearEnvio(envio) + "\n");
             }
 
-            System.out.println("Reporte generado correctamente: " + nombreArchivo);
+            System.out.println("Reporte generado: " + nombreArchivo);
 
         } catch (IOException e) {
             System.out.println("Error al generar el reporte: " + e.getMessage());
         }
     }
 
-    /**
-     * Convierte un objeto Envio a una línea de texto CSV.
-     */
     private String formatearEnvio(Envio envio) {
-        String id = obtenerTexto(envio.getId());
-        String estado = (envio.getEstado() != null) ? envio.getEstado().toString() : "Sin estado";
+        String id = envio.getId();
+        String estado = envio.getEstado() != null ? envio.getEstado().toString() : "Sin estado";
         String pago = String.valueOf(envio.getPago());
-        String repartidor = (envio.getRepartidor() != null) ? envio.getRepartidor().getNombreCompleto() : "No asignado";
+        String repartidor = envio.getRepartidor() != null ? envio.getRepartidor().getNombreCompleto() : "No asignado";
         String cliente = (envio.getPedido() != null && envio.getPedido().getCliente() != null)
                 ? envio.getPedido().getCliente().getNombreCompleto()
                 : "No registrado";
 
         return id + ";" + estado + ";" + pago + ";" + repartidor + ";" + cliente;
-    }
-
-    /**
-     * Método auxiliar para evitar nulls en texto.
-     */
-    private String obtenerTexto(String texto) {
-        return (texto != null) ? texto : "No disponible";
     }
 }
