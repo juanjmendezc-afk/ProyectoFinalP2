@@ -16,36 +16,36 @@ public class MainUserController {
     @FXML
     private Button btnCerrarSesion;
 
-    // 🔹 Usuario autenticado
+    // Usuario autenticado (lo envía LoginController)
     private User usuarioActual;
 
-    // 🔹 Este método lo llamará el LoginController
     public void setUsuarioActual(User usuario) {
         this.usuarioActual = usuario;
         System.out.println("Usuario recibido en MainUserController: " + usuario.getNombreCompleto());
     }
 
-    /**
-     * Abrir cotizador.
-     */
+    // ========================= COTIZAR ENVÍO =========================
+
     @FXML
     private void abrirCotizador() {
-        abrirVentanaSimple("/co/edu/uniquindio/proyectofinalp2/views/CotizarEnvioView.fxml",
-                "Cotizar envío");
+        abrirVentanaSimple(
+                "/co/edu/uniquindio/proyectofinalp2/views/CotizarEnvioView.fxml",
+                "Cotizar envío"
+        );
     }
 
-    /**
-     * Abrir crear envío enviando el usuario actual
-     */
+    // ========================= CREAR ENVÍO =========================
+
     @FXML
     private void abrirCrearEnvio() {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/co/edu/uniquindio/proyectofinalp2/views/CrearEnvioView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                    "/co/edu/uniquindio/proyectofinalp2/views/CrearEnvioView.fxml"));
+
             Parent root = loader.load();
 
             CrearEnvioController controller = loader.getController();
-            controller.setUsuarioActual(usuarioActual); // 🔹 Enviamos el usuario
+            controller.setUsuarioActual(usuarioActual);
 
             Stage stage = new Stage();
             stage.setTitle("Crear nuevo envío");
@@ -58,27 +58,52 @@ public class MainUserController {
         }
     }
 
-    /**
-     * Abrir rastreo.
-     */
+    // ========================= GESTIONAR MIS ENVÍOS =========================
+
     @FXML
-    private void abrirRastreo() {
-        abrirVentanaSimple("/co/edu/uniquindio/proyectofinalp2/views/RastrearEnvioView.fxml",
-                "Rastrear envío");
+    private void abrirGestionEnvios() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                    "/co/edu/uniquindio/proyectofinalp2/views/GestionEnviosUserView.fxml"));
+
+            Parent root = loader.load();
+
+            GestionEnviosUserController controller = loader.getController();
+            controller.setUsuarioActual(usuarioActual);
+
+            Stage stage = new Stage();
+            stage.setTitle("Mis Envíos");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            System.out.println("Error al abrir Gestión de Envíos");
+            e.printStackTrace();
+        }
     }
 
-    /**
-     * Abrir el historial, enviando usuarioActual
-     */
+    // ========================= RASTREAR =========================
+
+    @FXML
+    private void abrirRastreo() {
+        abrirVentanaSimple(
+                "/co/edu/uniquindio/proyectofinalp2/views/RastrearEnvioView.fxml",
+                "Rastrear envío"
+        );
+    }
+
+    // ========================= HISTORIAL =========================
+
     @FXML
     private void abrirHistorial() {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/co/edu/uniquindio/proyectofinalp2/views/HistorialEnviosView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                    "/co/edu/uniquindio/proyectofinalp2/views/HistorialEnviosView.fxml"));
+
             Parent root = loader.load();
 
             HistorialEnviosController controller = loader.getController();
-            controller.setUsuarioActual(usuarioActual); // 🔹 PASO IMPORTANTE
+            controller.setUsuarioActual(usuarioActual);
 
             Stage stage = new Stage();
             stage.setTitle("Historial de envíos");
@@ -91,14 +116,38 @@ public class MainUserController {
         }
     }
 
-    /**
-     * Cerrar sesión
-     */
+    // ========================= COMPROBANTES =========================
+
+    @FXML
+    private void abrirComprobantes() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                    "/co/edu/uniquindio/proyectofinalp2/views/ComprobantesView.fxml"));
+
+            Parent root = loader.load();
+
+            ComprobantesController controller = loader.getController();
+            controller.setUsuarioActual(usuarioActual); // ✔ corregido
+
+            Stage stage = new Stage();
+            stage.setTitle("Comprobantes de Pago");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            System.out.println("Error al abrir Comprobantes");
+            e.printStackTrace();
+        }
+    }
+
+    // ========================= CERRAR SESIÓN =========================
+
     @FXML
     private void cerrarSesion() {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/co/edu/uniquindio/proyectofinalp2/login.fxml"));
+
             Parent root = loader.load();
 
             Stage stage = (Stage) btnCerrarSesion.getScene().getWindow();
@@ -107,14 +156,13 @@ public class MainUserController {
             stage.show();
 
         } catch (Exception e) {
-            System.out.println("Error al regresar al login.");
+            System.out.println("Error al regresar al login");
             e.printStackTrace();
         }
     }
 
-    /**
-     * Método rápido para abrir ventanas que NO requieren usuarioActual.
-     */
+    // ========================= UTILIDAD =========================
+
     private void abrirVentanaSimple(String rutaFXML, String titulo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
@@ -126,7 +174,7 @@ public class MainUserController {
             stage.show();
 
         } catch (Exception e) {
-            System.out.println("Error al abrir la ventana: " + titulo);
+            System.out.println("Error al abrir ventana: " + titulo);
             e.printStackTrace();
         }
     }

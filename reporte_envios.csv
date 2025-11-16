@@ -1,5 +1,2 @@
 ID;Estado;Pago;Repartidor;Cliente
-E001;PENDIENTE;25000.0;Carlos López;No registrado
-E002;EN_CAMINO;32000.0;Ana Ruiz;No registrado
-E003;ENTREGADO;40000.0;Carlos López;No registrado
-E4;PENDIENTE;20000.0;No asignado;No registrado
+E1;EN_CAMINO;20000.0;j;s

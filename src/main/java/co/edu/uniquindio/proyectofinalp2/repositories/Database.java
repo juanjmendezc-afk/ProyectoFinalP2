@@ -10,6 +10,7 @@ public class Database {
 
     private ArrayList<User> usuarios;
     private ArrayList<User> solicitudesRepartidor;
+
     private ArrayList<Envio> listaEnvios;
     private ArrayList<Pedido> listaPedidos;
 
@@ -22,9 +23,14 @@ public class Database {
 
         // Admin por defecto
         usuarios.add(new User(
-                "A1", "Administrador", "admin@gmail.com", "0000",
-                "0000000", "ADMIN",
-                "CC", "1111111",
+                "A1",
+                "Administrador del sistema",
+                "admin@gmail.com",
+                "0000",
+                "0000000",
+                "ADMIN",
+                "CC",
+                "1111111",
                 "ACTIVO"
         ));
     }
@@ -34,13 +40,15 @@ public class Database {
         return instancia;
     }
 
-    // ============= USUARIOS =============
+    // ======================================================
+    // USUARIOS
+    // ======================================================
 
     public User obtenerUsuario(String email, String password) {
         for (User u : usuarios) {
             if (u.getEmail().equalsIgnoreCase(email)
                     && u.getPassword().equals(password)
-                    && u.getEstado().equals("ACTIVO")) {
+                    && "ACTIVO".equals(u.getEstado())) {
                 return u;
             }
         }
@@ -62,7 +70,7 @@ public class Database {
 
     public void agregarUsuario(User user) {
 
-        if (user.getEstado().equals("PENDIENTE_APROBACION")) {
+        if ("PENDIENTE_APROBACION".equals(user.getEstado())) {
             solicitudesRepartidor.add(user);
         } else {
             usuarios.add(user);
@@ -83,14 +91,58 @@ public class Database {
         solicitudesRepartidor.remove(user);
     }
 
-    // ============= PEDIDOS Y ENVIOS =============
+    // ======================================================
+    // PEDIDOS & ENVIOS
+    // ======================================================
 
-    public void agregarPedido(Pedido p) { listaPedidos.add(p); }
+    public void agregarPedido(Pedido p) {
+        listaPedidos.add(p);
+    }
 
-    public ArrayList<Pedido> getListaPedidos() { return listaPedidos; }
+    public ArrayList<Pedido> getListaPedidos() {
+        return listaPedidos;
+    }
 
-    public void agregarEnvio(Envio e) { listaEnvios.add(e); }
+    public void agregarEnvio(Envio e) {
+        listaEnvios.add(e);
 
-    public ArrayList<Envio> getListaEnvios() { return listaEnvios; }
+        if (e.getPedido() != null) {
+            listaPedidos.add(e.getPedido());
+        }
+    }
+
+    public ArrayList<Envio> getListaEnvios() {
+        return listaEnvios;
+    }
+
+    // ======================================================
+    // ADMIN: ASIGNAR REPARTIDOR Y VALIDAR PAGO
+    // ======================================================
+
+    public boolean asignarRepartidorAEnvio(Envio envio, User repartidor) {
+
+        if (envio == null || repartidor == null) return false;
+
+        if (!envio.puedeSerAsignado()) {  // AHORA ESTE MÉTODO YA EXISTE EN ENVIO
+            return false;
+        }
+
+        envio.setRepartidor(repartidor);
+        envio.setEstado(EstadoEnvio.EN_CAMINO);
+
+        return true;
+    }
+
+    public void actualizarEstadoEnvio(Envio envio, EstadoEnvio nuevoEstado) {
+        if (envio != null) envio.setEstado(nuevoEstado);
+    }
+
+    public void marcarPagoRealizado(Envio envio) {
+        if (envio != null) envio.setEstadoPago(EstadoPago.PAGADO);
+    }
+
+    public void marcarPagoContraEntrega(Envio envio) {
+        if (envio != null) envio.setEstadoPago(EstadoPago.CONTRA_ENTREGA);
+    }
 }
 

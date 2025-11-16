@@ -1,6 +1,6 @@
 package co.edu.uniquindio.proyectofinalp2.comportamiento;
 
-public class CalcularCostoEnvio {
+public class CalculadoraCostoEnvio {
 
     private EstrategiaCosto estrategia;
 
@@ -8,11 +8,7 @@ public class CalcularCostoEnvio {
         this.estrategia = estrategia;
     }
 
-    public double ejecutarCalculo(String destino) {
-        if(estrategia == null){
-            throw new IllegalStateException("No se ha definido estrategia de costo");
-        }
-
+    public double calcular(String destino) {
         return estrategia.calcularCosto(destino);
     }
 }

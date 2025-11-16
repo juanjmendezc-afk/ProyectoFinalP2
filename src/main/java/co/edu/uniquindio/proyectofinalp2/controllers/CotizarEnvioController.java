@@ -1,32 +1,38 @@
 package co.edu.uniquindio.proyectofinalp2.controllers;
 
+import co.edu.uniquindio.proyectofinalp2.comportamiento.*;
+import co.edu.uniquindio.proyectofinalp2.estructural.CostoExtra;
+import co.edu.uniquindio.proyectofinalp2.estructural.EmpaqueEspecialDecorator;
+import co.edu.uniquindio.proyectofinalp2.estructural.SeguroDecorator;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class CotizarEnvioController {
 
-    @FXML
-    private ComboBox<String> comboTipoPaquete;
+    @FXML private ComboBox<String> comboTipoPaquete;
+    @FXML private ComboBox<String> comboDestino;
+    @FXML private CheckBox chkSeguro;
+    @FXML private CheckBox chkEmpaque;
+    @FXML private Label lblResultado;
 
-    @FXML
-    private ComboBox<String> comboDestino;
-
-    @FXML
-    private Label lblResultado;
-
-    // 🔹 Valor calculado que podrá ser leído desde CrearEnvio
     public static double costoEstimado = 0;
 
     @FXML
     private void initialize() {
-        comboTipoPaquete.getItems().addAll("Liviano (0-5 kg)", "Mediano (6-15 kg)", "Pesado (16-30 kg)");
+        comboTipoPaquete.getItems().addAll(
+                "Liviano (0-5 kg)",
+                "Mediano (6-15 kg)",
+                "Pesado (16-30 kg)"
+        );
         comboDestino.getItems().addAll("Regional", "Nacional");
     }
 
     @FXML
     private void calcularCosto() {
+
         String tipo = comboTipoPaquete.getValue();
         String destino = comboDestino.getValue();
 
@@ -36,18 +42,29 @@ public class CotizarEnvioController {
             return;
         }
 
-        double costoBase = switch (tipo) {
-            case "Liviano (0-5 kg)" -> 10000;
-            case "Mediano (6-15 kg)" -> 20000;
-            case "Pesado (16-30 kg)" -> 35000;
-            default -> 0;
-        };
+        // === STRATEGY ===
+        CalculadoraCostoEnvio calculadora = new CalculadoraCostoEnvio();
 
-        if (destino.equals("Nacional")) {
-            costoBase *= 1.5;
+        switch (tipo) {
+            case "Liviano (0-5 kg)" -> calculadora.setEstrategia(new CostoLiviano());
+            case "Mediano (6-15 kg)" -> calculadora.setEstrategia(new CostoMediano());
+            case "Pesado (16-30 kg)" -> calculadora.setEstrategia(new CostoPesado());
         }
 
-        costoEstimado = costoBase; // 🔹 Guardamos el valor para usarlo luego
+        double costoBase = calculadora.calcular(destino);
+
+        // === DECORATOR (estructural) ===
+        CostoExtra costo = base -> base;  // sin extras aún
+
+        if (chkSeguro.isSelected()) {
+            costo = new SeguroDecorator(costo);
+        }
+        if (chkEmpaque.isSelected()) {
+            costo = new EmpaqueEspecialDecorator(costo);
+        }
+
+        costoEstimado = costo.aplicar(costoBase);
+
         lblResultado.setText("Costo estimado: $" + costoEstimado);
         lblResultado.setStyle("-fx-text-fill: green;");
     }

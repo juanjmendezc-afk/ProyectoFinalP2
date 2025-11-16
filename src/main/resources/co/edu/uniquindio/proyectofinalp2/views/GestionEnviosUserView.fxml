@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.proyectofinalp2.controllers.GestionEnviosUserController"
+            prefWidth="850" prefHeight="500">
+
+    <top>
+        <Label text="Mis Solicitudes de Envío"
+               BorderPane.alignment="CENTER"
+               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-padding: 15;"/>
+    </top>
+
+    <center>
+        <VBox spacing="10">
+
+            <!-- CORRECCIÓN DE PADDING -->
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <TableView fx:id="tablaEnvios" prefHeight="320">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="100"/>
+                    <TableColumn fx:id="colOrigen" text="Origen" prefWidth="200"/>
+                    <TableColumn fx:id="colDestino" text="Destino" prefWidth="200"/>
+                    <TableColumn fx:id="colEstado" text="Estado" prefWidth="120"/>
+                    <TableColumn fx:id="colPago" text="Pago" prefWidth="100"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="10">
+                <Button text="Editar envío"
+                        onAction="#abrirEditarEnvio"
+                        style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+
+                <Button text="Cancelar envío"
+                        onAction="#cancelarEnvio"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+
+                <Button text="Volver"
+                        onAction="#volver"
+                        style="-fx-background-color: #7f8c8d; -fx-text-fill: white;"/>
+            </HBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

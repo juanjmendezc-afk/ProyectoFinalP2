@@ -13,18 +13,21 @@
         <Insets top="40" bottom="40" left="40" right="40"/>
     </padding>
 
-    <!-- Título principal -->
-    <Label text="MENÚ DE USUARIO" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <Label text="MENÚ DE USUARIO"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
 
-    <!-- Botones -->
     <Button text="Cotizar envío" onAction="#abrirCotizador"/>
     <Button text="Crear solicitud de envío" onAction="#abrirCrearEnvio"/>
+    <Button text="Gestionar mis envíos" onAction="#abrirGestionEnvios"/>
     <Button text="Rastrear paquete" onAction="#abrirRastreo"/>
     <Button text="Historial de envíos" onAction="#abrirHistorial"/>
 
-    <!-- Cerrar sesión -->
+    <!-- Botón para comprobantes -->
+    <Button text="Consultar comprobantes" onAction="#abrirComprobantes"/>
+
     <Button fx:id="btnCerrarSesion"
             text="Cerrar sesión"
             onAction="#cerrarSesion"
             style="-fx-background-color: #ff5555; -fx-text-fill: white;"/>
+
 </VBox>

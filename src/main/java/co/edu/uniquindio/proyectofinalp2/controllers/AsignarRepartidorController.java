@@ -2,6 +2,7 @@ package co.edu.uniquindio.proyectofinalp2.controllers;
 
 import co.edu.uniquindio.proyectofinalp2.models.Envio;
 import co.edu.uniquindio.proyectofinalp2.models.EstadoEnvio;
+import co.edu.uniquindio.proyectofinalp2.models.EstadoPago;
 import co.edu.uniquindio.proyectofinalp2.models.User;
 import co.edu.uniquindio.proyectofinalp2.repositories.Database;
 
@@ -20,6 +21,7 @@ public class AsignarRepartidorController {
     @FXML private TableView<Envio> tablaEnvios;
     @FXML private TableColumn<Envio, String> colId, colOrigen, colDestino;
     @FXML private TableColumn<Envio, Double> colCosto;
+
     @FXML private ComboBox<User> comboRepartidores;
     @FXML private Label lblMensaje;
 
@@ -48,10 +50,17 @@ public class AsignarRepartidorController {
         cargarRepartidores();
     }
 
+    /**
+     * 📌 SOLO muestra envíos:
+     *    - Estado = PENDIENTE
+     *    - estadoPago = PAGADO o CONTRA_ENTREGA
+     */
     private void cargarEnviosPendientes() {
         var pendientes = db.getListaEnvios()
                 .stream()
                 .filter(e -> e.getEstado() == EstadoEnvio.PENDIENTE)
+                .filter(e -> e.getEstadoPago() == EstadoPago.PAGADO ||
+                        e.getEstadoPago() == EstadoPago.CONTRA_ENTREGA)
                 .collect(Collectors.toList());
 
         tablaEnvios.setItems(FXCollections.observableArrayList(pendientes));
@@ -60,7 +69,8 @@ public class AsignarRepartidorController {
     private void cargarRepartidores() {
         var repartidores = db.listarUsuarios()
                 .stream()
-                .filter(u -> u.getRol().equals("REPARTIDOR"))
+                .filter(u -> "REPARTIDOR".equals(u.getRol()))
+                .filter(u -> "ACTIVO".equals(u.getEstado()))
                 .collect(Collectors.toList());
 
         comboRepartidores.setItems(FXCollections.observableArrayList(repartidores));
@@ -82,6 +92,13 @@ public class AsignarRepartidorController {
             return;
         }
 
+        // VALIDACIÓN DEL PAGO
+        if (envioSeleccionado.getEstadoPago() != EstadoPago.PAGADO &&
+                envioSeleccionado.getEstadoPago() != EstadoPago.CONTRA_ENTREGA) {
+            mostrarMensaje("No se puede asignar porque el envío no está pagado.", "red");
+            return;
+        }
+
         envioSeleccionado.setRepartidor(repartidorSeleccionado);
         envioSeleccionado.setEstado(EstadoEnvio.EN_CAMINO);
 
@@ -95,9 +112,6 @@ public class AsignarRepartidorController {
         lblMensaje.setStyle("-fx-text-fill: " + color + ";");
     }
 
-    // --------------------------------------------------------
-    // 🔙 BOTÓN VOLVER: Regresa al PANEL DEL ADMINISTRADOR
-    // --------------------------------------------------------
     @FXML
     private void volver() {
         try {

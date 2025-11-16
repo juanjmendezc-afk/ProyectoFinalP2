@@ -16,15 +16,12 @@ public class RastrearEnvioController {
 
     private final Database db = Database.getInstancia();
 
-    /**
-     * Busca el envío en la base de datos por su ID.
-     */
     @FXML
     private void buscarEnvio() {
         String id = txtIdEnvio.getText().trim();
 
         if (id.isEmpty()) {
-            lblResultado.setText("⚠️ Por favor ingrese un ID de envío.");
+            lblResultado.setText("⚠ Por favor ingrese un ID de envío.");
             lblResultado.setStyle("-fx-text-fill: red;");
             return;
         }
@@ -38,23 +35,24 @@ public class RastrearEnvioController {
         if (envioEncontrado == null) {
             lblResultado.setText("❌ No se encontró ningún envío con el ID: " + id);
             lblResultado.setStyle("-fx-text-fill: red;");
-        } else {
-            lblResultado.setText(
-                    " Envío encontrado:\n" +
-                            "Origen: " + envioEncontrado.getDireccionOrigen().getCiudad() + "\n" +
-                            "Destino: " + envioEncontrado.getDireccionDestino().getCiudad() + "\n" +
-                            "Estado: " + envioEncontrado.getEstado()
-            );
-            lblResultado.setStyle("-fx-text-fill: green;");
+            return;
         }
+
+        // MOSTRAR INFORMACIÓN DEL ENVÍO
+        lblResultado.setText(
+                "✔ Envío encontrado\n\n" +
+                        "• Origen: " + envioEncontrado.getOrigen().toString() + "\n" +
+                        "• Destino: " + envioEncontrado.getDestino().toString() + "\n" +
+                        "• Estado: " + envioEncontrado.getEstadoTexto() + "\n" +
+                        "• Repartidor: " + envioEncontrado.getRepartidorTexto()
+        );
+        lblResultado.setStyle("-fx-text-fill: green;");
     }
 
-    /**
-     * Cierra la ventana actual.
-     */
     @FXML
     private void cerrarVentana() {
         Stage stage = (Stage) txtIdEnvio.getScene().getWindow();
         stage.close();
     }
 }
+

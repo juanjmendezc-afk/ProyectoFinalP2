@@ -6,11 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
-/**
- * Controlador principal del panel del administrador.
- * Funciones permitidas por requisitos RF-010 a RF-014.
- */
 public class MainAdminController {
 
     private User adminActual;
@@ -50,19 +47,26 @@ public class MainAdminController {
     }
 
     /**
-     * Método genérico para cargar una vista.
+     * Método SEGURO para cargar vistas sin depender de un botón del FXML.
      */
     private void cargarVista(String ruta, String titulo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(ruta));
             Parent root = loader.load();
 
-            Stage stage = (Stage) Stage.getWindows()
+            // ✔ Obtiene el Stage ACTUAL de manera universal, sin riesgo de null
+            Window window = Stage.getWindows()
                     .stream()
-                    .filter(window -> window.isShowing())
+                    .filter(Window::isShowing)
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
+            if (window == null) {
+                System.err.println("ERROR: No hay una ventana abierta.");
+                return;
+            }
+
+            Stage stage = (Stage) window;
             stage.setScene(new Scene(root));
             stage.setTitle(titulo);
             stage.show();

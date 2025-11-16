@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.uniquindio.proyectofinalp2.controllers.EditarEnvioController"
+      spacing="15">
+
+    <padding>
+        <Insets top="20" bottom="20" left="20" right="20"/>
+    </padding>
+
+    <Label text="Editar Envío" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10">
+        <Label text="Origen:"/>
+        <TextField fx:id="txtOrigen" prefWidth="300"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Destino:"/>
+        <TextField fx:id="txtDestino" prefWidth="300"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Pago:"/>
+        <TextField fx:id="txtPago" prefWidth="150"/>
+    </HBox>
+
+    <HBox spacing="15">
+        <Button text="Guardar" onAction="#guardarCambios"
+                style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+
+        <Button text="Cerrar" onAction="#cerrar"
+                style="-fx-background-color: #c0392b; -fx-text-fill: white;"/>
+    </HBox>
+
+</VBox>

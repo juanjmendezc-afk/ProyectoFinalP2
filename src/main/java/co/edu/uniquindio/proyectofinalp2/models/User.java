@@ -1,6 +1,8 @@
 package co.edu.uniquindio.proyectofinalp2.models;
 
-public class User {
+import co.edu.uniquindio.proyectofinalp2.comportamiento.Observer;
+
+public class User implements Observer {
 
     private String id;
     private String nombreCompleto;
@@ -9,13 +11,12 @@ public class User {
     private String telefono;
     private String rol;
 
-    private String tipoIdentificacion;   // CC, TI, CE
+    private String tipoIdentificacion;
     private String numeroIdentificacion;
 
-    private String estado; // ACTIVO, INACTIVO, PENDIENTE_APROBACION
+    private String estado;
 
-    public User(String id, String nombre, String email, String password, String telefono, String rol) {}
-
+    // Constructor completo
     public User(String id, String nombreCompleto, String email, String password,
                 String telefono, String rol,
                 String tipoIdentificacion, String numeroIdentificacion,
@@ -32,7 +33,29 @@ public class User {
         this.estado = estado;
     }
 
-    // ================= GETTERS & SETTERS =================
+    // Constructor secundario
+    public User(String id, String nombre, String email, String password, String telefono, String rol) {
+        this.id = id;
+        this.nombreCompleto = nombre;
+        this.email = email;
+        this.password = password;
+        this.telefono = telefono;
+        this.rol = rol;
+        this.tipoIdentificacion = "";
+        this.numeroIdentificacion = "";
+        this.estado = "ACTIVO";
+    }
+
+    // ==========================
+    // IMPLEMENTACIÓN OBSERVER
+    // ==========================
+
+    @Override
+    public void recibirNotificacion(String mensaje) {
+        System.out.println("📩 Notificación para " + nombreCompleto + ": " + mensaje);
+    }
+
+    // GETTERS Y SETTERS
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -60,4 +83,9 @@ public class User {
 
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+
+    @Override
+    public String toString() {
+        return nombreCompleto + " (" + email + ")";
+    }
 }

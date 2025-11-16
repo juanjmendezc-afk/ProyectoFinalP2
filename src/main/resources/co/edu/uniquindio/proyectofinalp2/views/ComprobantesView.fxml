@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="co.edu.uniquindio.proyectofinalp2.controllers.ComprobantesController"
+      alignment="CENTER">
+
+    <padding>
+        <Insets top="20" left="20" right="20" bottom="20"/>
+    </padding>
+
+    <Label text="Comprobantes de Pagos"
+           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="tablaComprobantes" prefHeight="300">
+
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+            <TableColumn fx:id="colOrigen" text="Origen" prefWidth="150"/>
+            <TableColumn fx:id="colDestino" text="Destino" prefWidth="150"/>
+            <TableColumn fx:id="colMonto" text="Monto" prefWidth="100"/>
+            <TableColumn fx:id="colMetodoPago" text="Método de Pago" prefWidth="150"/>
+        </columns>
+
+    </TableView>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Descargar comprobante" onAction="#descargarComprobante"/>
+        <Button text="Volver" onAction="#volver"/>
+    </HBox>
+
+</VBox>
