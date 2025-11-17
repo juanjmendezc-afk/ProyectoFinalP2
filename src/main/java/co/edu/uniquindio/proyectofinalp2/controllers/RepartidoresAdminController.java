@@ -27,14 +27,13 @@ public class RepartidoresAdminController {
 
     @FXML
     private void initialize() {
-
-        // ========= TABLA DE REPARTIDORES ACTIVOS =========
+        // repartodores
         colId.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getId()));
         colNombre.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getNombreCompleto()));
         colEmail.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getEmail()));
         colTelefono.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getTelefono()));
 
-        // ========= TABLA DE SOLICITUDES =========
+        // solicitudes
         colSNombre.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getNombreCompleto()));
         colSEmail.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getEmail()));
         colSTelefono.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getTelefono()));
@@ -44,13 +43,12 @@ public class RepartidoresAdminController {
 
     private void cargarTablas() {
 
-        // Repartidores activos
         var repartidoresActivos = db.listarUsuarios()
                 .stream()
                 .filter(u -> u.getRol().equals("REPARTIDOR") && u.getEstado().equals("ACTIVO"))
                 .collect(Collectors.toList());
 
-        // Solicitudes pendientes
+        // Solicitudes pendiententes
         var solicitudes = db.listarSolicitudes();
 
         tablaRepartidores.setItems(FXCollections.observableArrayList(repartidoresActivos));
@@ -67,7 +65,7 @@ public class RepartidoresAdminController {
         }
 
         seleccionado.setEstado("ACTIVO");
-        seleccionado.setRol("REPARTIDOR"); // ← CORRECCIÓN CLAVE
+        seleccionado.setRol("REPARTIDOR");
 
         db.aprobarRepartidor(seleccionado);
 

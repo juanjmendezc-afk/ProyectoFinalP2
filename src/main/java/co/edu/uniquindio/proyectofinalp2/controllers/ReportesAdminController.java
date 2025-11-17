@@ -41,14 +41,13 @@ public class ReportesAdminController {
     @FXML
     public void initialize() {
 
-        // Asocia cada columna con su propiedad visible en el TableView
+        // tabla view
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colEstado.setCellValueFactory(new PropertyValueFactory<>("estadoTexto"));
         colPago.setCellValueFactory(new PropertyValueFactory<>("pagoTexto"));
         colRepartidor.setCellValueFactory(new PropertyValueFactory<>("repartidorTexto"));
         colCliente.setCellValueFactory(new PropertyValueFactory<>("clienteTexto"));
 
-        // Carga la tabla con los envíos del "Database"
         ObservableList<Envio> lista = FXCollections.observableArrayList(db.getListaEnvios());
         tablaEnvios.setItems(lista);
     }
@@ -59,7 +58,7 @@ public class ReportesAdminController {
     @FXML
     private void generarReporteCSV() {
         try {
-            // Se envían: lista de envíos + nombre del archivo
+            //lista de envíos y nombre del archivo
             generadorCSV.generarReporte(db.getListaEnvios(), "reporte_envios.csv");
 
             mostrarAlerta("Reporte CSV generado correctamente:\nreporte_envios.csv");
@@ -70,9 +69,6 @@ public class ReportesAdminController {
         }
     }
 
-    /**
-     * Regresa al panel principal del administrador.
-     */
     @FXML
     private void volver() {
         try {
@@ -91,9 +87,6 @@ public class ReportesAdminController {
         }
     }
 
-    /**
-     * Muestra una alerta informativa.
-     */
     private void mostrarAlerta(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Información");

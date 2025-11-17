@@ -54,7 +54,7 @@ public class GestionEnviosUserController {
             return;
         }
 
-        // No se puede editar si YA fue asignado a repartidor
+        // No se puede editar si ya fue asignado a repartidor
         if (seleccionado.getEstado() != EstadoEnvio.PENDIENTE) {
             alert("Solo puedes editar envíos que aún NO han sido asignados.");
             return;

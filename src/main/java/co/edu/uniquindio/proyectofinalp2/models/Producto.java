@@ -4,16 +4,10 @@ public class Producto {
 
     private String id;
     private String nombre;
-    private double peso;
-    private double precio;
-    private String descripcion;
 
-    public Producto(String id, String nombre, double peso, double precio, String descripcion) {
+    public Producto(String id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.peso = peso;
-        this.precio = precio;
-        this.descripcion = descripcion;
     }
 
     public String getId() {
@@ -22,17 +16,5 @@ public class Producto {
 
     public String getNombre() {
         return nombre;
-    }
-
-    public double getPeso() {
-        return peso;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
     }
 }

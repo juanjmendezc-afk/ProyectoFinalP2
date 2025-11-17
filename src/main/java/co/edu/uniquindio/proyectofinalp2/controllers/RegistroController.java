@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyectofinalp2.controllers;
 
+import co.edu.uniquindio.proyectofinalp2.creacional.UserBuilder;
 import co.edu.uniquindio.proyectofinalp2.estructural.SistemaLogisticaFacade;
 import co.edu.uniquindio.proyectofinalp2.models.User;
 import javafx.event.ActionEvent;
@@ -45,9 +46,6 @@ public class RegistroController {
         String tipoId = comboTipoId.getValue();
         String numeroId = txtNumeroId.getText().trim();
 
-        // ================================
-        // VALIDACIONES SIMPLES
-        // ================================
         if (nombre.isEmpty() || email.isEmpty() || telefono.isEmpty() ||
                 pass.isEmpty() || confirmar.isEmpty() || rol == null ||
                 tipoId == null || numeroId.isEmpty()) {
@@ -57,14 +55,12 @@ public class RegistroController {
             return;
         }
 
-        // ✔ validar teléfono: solo números y 10 dígitos
         if (!telefono.matches("\\d{10}")) {
             lblMensajeRegistro.setText("Teléfono inválido. Debe tener 10 números.");
             lblMensajeRegistro.setStyle("-fx-text-fill: red;");
             return;
         }
 
-        // ✔ validar identificación: solo números, mínimo 6 dígitos
         if (!numeroId.matches("\\d{6,}")) {
             lblMensajeRegistro.setText("Número de identificación inválido.");
             lblMensajeRegistro.setStyle("-fx-text-fill: red;");
@@ -77,18 +73,23 @@ public class RegistroController {
             return;
         }
 
-        // Convertimos el rol visible al rol real
         String rolReal = rol.equals("Usuario") ? "USER" : "REPARTIDOR";
 
         String estado = rolReal.equals("REPARTIDOR")
                 ? "PENDIENTE_APROBACION"
                 : "ACTIVO";
 
-        // Crear usuario como siempre
-        User nuevoUsuario = new User(
-                "TEMPORAL", nombre, email, pass, telefono,
-                rolReal, tipoId, numeroId, estado
-        );
+        User nuevoUsuario = new UserBuilder()
+                .id("TEMPORAL")
+                .nombre(nombre)
+                .email(email)
+                .telefono(telefono)
+                .password(pass)
+                .rol(rolReal)
+                .tipoId(tipoId)
+                .numeroId(numeroId)
+                .estado(estado)
+                .build();
 
         boolean registrado = facade.registrarUsuario(nuevoUsuario);
 

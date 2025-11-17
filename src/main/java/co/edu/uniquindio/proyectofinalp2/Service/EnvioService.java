@@ -17,12 +17,10 @@ public class EnvioService {
         database = Database.getInstancia();
     }
 
-    // Obtener todos los envíos registrados
     public ArrayList<Envio> listarEnvios() {
         return database.getListaEnvios();
     }
 
-    // Buscar un envío por ID
     public Envio obtenerEnvioPorId(String idEnvio) {
         for (Envio envio : database.getListaEnvios()) {
             if (envio.getId().equals(idEnvio)) {
@@ -32,20 +30,20 @@ public class EnvioService {
         return null;
     }
 
-    // Cancelar un envío (cambiar estado a CANCELADO)
+    // Cancelar un envío
     public void cancelarEnvio(String idEnvio) {
         Envio envio = obtenerEnvioPorId(idEnvio);
         if (envio != null) {
             envio.setEstado(EstadoEnvio.CANCELADO);
-            System.out.println("📦 Envío " + idEnvio + " cancelado correctamente.");
+            System.out.println(" Envío " + idEnvio + " cancelado correctamente.");
         } else {
-            System.out.println("⚠️ No se encontró el envío con ID: " + idEnvio);
+            System.out.println("No se encontró el envío con ID: " + idEnvio);
         }
     }
 
     // Agregar un nuevo envío
     public void agregarEnvio(Envio envio) {
         database.agregarEnvio(envio);
-        System.out.println("✅ Envío agregado correctamente con ID: " + envio.getId());
+        System.out.println("Envío agregado correctamente con ID: " + envio.getId());
     }
 }

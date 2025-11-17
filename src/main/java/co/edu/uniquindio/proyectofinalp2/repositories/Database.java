@@ -39,11 +39,6 @@ public class Database {
         if (instancia == null) instancia = new Database();
         return instancia;
     }
-
-    // ======================================================
-    // USUARIOS
-    // ======================================================
-
     public User obtenerUsuario(String email, String password) {
         for (User u : usuarios) {
             if (u.getEmail().equalsIgnoreCase(email)
@@ -91,9 +86,7 @@ public class Database {
         solicitudesRepartidor.remove(user);
     }
 
-    // ======================================================
-    // PEDIDOS & ENVIOS
-    // ======================================================
+    // Pedidos y envios
 
     public void agregarPedido(Pedido p) {
         listaPedidos.add(p);
@@ -115,15 +108,11 @@ public class Database {
         return listaEnvios;
     }
 
-    // ======================================================
-    // ADMIN: ASIGNAR REPARTIDOR Y VALIDAR PAGO
-    // ======================================================
-
     public boolean asignarRepartidorAEnvio(Envio envio, User repartidor) {
 
         if (envio == null || repartidor == null) return false;
 
-        if (!envio.puedeSerAsignado()) {  // AHORA ESTE MÉTODO YA EXISTE EN ENVIO
+        if (!envio.puedeSerAsignado()) {
             return false;
         }
 

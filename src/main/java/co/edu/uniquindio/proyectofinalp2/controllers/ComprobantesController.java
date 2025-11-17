@@ -42,8 +42,7 @@ public class ComprobantesController {
         tablaComprobantes.getItems().setAll(
                 Database.getInstancia().getListaEnvios()
                         .stream()
-                        .filter(e -> e.getPedido() != null &&
-                                e.getPedido().getCliente().equals(usuarioActual))
+                        .filter(e -> e.getPedido() != null && e.getPedido().getCliente().equals(usuarioActual))
                         .toList()
         );
     }

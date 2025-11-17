@@ -21,7 +21,7 @@ public class RastrearEnvioController {
         String id = txtIdEnvio.getText().trim();
 
         if (id.isEmpty()) {
-            lblResultado.setText("⚠ Por favor ingrese un ID de envío.");
+            lblResultado.setText(" Por favor ingrese un ID de envío.");
             lblResultado.setStyle("-fx-text-fill: red;");
             return;
         }
@@ -33,7 +33,7 @@ public class RastrearEnvioController {
                 .orElse(null);
 
         if (envioEncontrado == null) {
-            lblResultado.setText("❌ No se encontró ningún envío con el ID: " + id);
+            lblResultado.setText(" No se encontró ningún envío con el ID: " + id);
             lblResultado.setStyle("-fx-text-fill: red;");
             return;
         }

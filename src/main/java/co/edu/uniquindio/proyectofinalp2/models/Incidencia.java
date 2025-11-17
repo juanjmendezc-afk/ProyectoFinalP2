@@ -4,16 +4,14 @@ import java.time.LocalDate;
 
 public class Incidencia {
 
-    private String idIncidencia;   // Identificador único de la incidencia
-    private String descripcion;    // Detalle del problema
-    private LocalDate fecha;       // Fecha en que ocurrió la incidencia
-    private String idEnvio;        // Id del envío asociado
+    private String idIncidencia;
+    private String descripcion;
+    private LocalDate fecha;
+    private String idEnvio;
 
-    // Constructor vacío
     public Incidencia() {
     }
 
-    // Constructor con parámetros
     public Incidencia(String idIncidencia, String descripcion, LocalDate fecha, String idEnvio) {
         this.idIncidencia = idIncidencia;
         this.descripcion = descripcion;
@@ -21,7 +19,6 @@ public class Incidencia {
         this.idEnvio = idEnvio;
     }
 
-    // Getters y Setters
     public String getIdIncidencia() {
         return idIncidencia;
     }
@@ -54,7 +51,6 @@ public class Incidencia {
         this.idEnvio = idEnvio;
     }
 
-    // mostrar incidencia
     public String mostrarInfo() {
         return "Incidencia: " + descripcion + " (Fecha: " + fecha + ")";
     }

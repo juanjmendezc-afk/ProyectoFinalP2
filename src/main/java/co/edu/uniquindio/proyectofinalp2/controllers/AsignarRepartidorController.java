@@ -51,16 +51,15 @@ public class AsignarRepartidorController {
     }
 
     /**
-     * 📌 SOLO muestra envíos:
-     *    - Estado = PENDIENTE
-     *    - estadoPago = PAGADO o CONTRA_ENTREGA
+     *  SOLO muestra envíos:
+     *  Estado = PENDIENTE
+     *  estadoPago = PAGADO o CONTRA_ENTREGA
      */
     private void cargarEnviosPendientes() {
         var pendientes = db.getListaEnvios()
                 .stream()
                 .filter(e -> e.getEstado() == EstadoEnvio.PENDIENTE)
-                .filter(e -> e.getEstadoPago() == EstadoPago.PAGADO ||
-                        e.getEstadoPago() == EstadoPago.CONTRA_ENTREGA)
+                .filter(e -> e.getEstadoPago() == EstadoPago.PAGADO || e.getEstadoPago() == EstadoPago.CONTRA_ENTREGA)
                 .collect(Collectors.toList());
 
         tablaEnvios.setItems(FXCollections.observableArrayList(pendientes));
@@ -93,8 +92,7 @@ public class AsignarRepartidorController {
         }
 
         // VALIDACIÓN DEL PAGO
-        if (envioSeleccionado.getEstadoPago() != EstadoPago.PAGADO &&
-                envioSeleccionado.getEstadoPago() != EstadoPago.CONTRA_ENTREGA) {
+        if (envioSeleccionado.getEstadoPago() != EstadoPago.PAGADO && envioSeleccionado.getEstadoPago() != EstadoPago.CONTRA_ENTREGA) {
             mostrarMensaje("No se puede asignar porque el envío no está pagado.", "red");
             return;
         }

@@ -71,7 +71,7 @@ public class MainRepartidorController {
             lblCliente.setText("Desconocido");
     }
 
-    // ======================== ESTADOS ==========================
+    // ESTADO
 
     @FXML
     private void marcarEnCamino() {
@@ -100,8 +100,6 @@ public class MainRepartidorController {
         mostrarDetalles(seleccionado);
         cargarEnviosAsignados();
     }
-
-    // ======================== CERRAR SESIÓN (CORREGIDO) ==========================
 
     @FXML
     private void cerrarSesion() {

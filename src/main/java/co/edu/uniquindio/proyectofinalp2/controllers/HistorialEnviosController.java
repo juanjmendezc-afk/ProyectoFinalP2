@@ -22,7 +22,7 @@ public class HistorialEnviosController {
     @FXML private TableColumn<Envio, Double> colCosto;
 
     private final Database db = Database.getInstancia();
-    private User usuarioActual; // será inyectado por MainUserController
+    private User usuarioActual;
 
     public void setUsuarioActual(User usuario) {
         this.usuarioActual = usuario;
@@ -39,7 +39,7 @@ public class HistorialEnviosController {
         colEstado.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(
                 data.getValue().getEstado().toString()));
         colCosto.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getPago()));
-        // no cargamos aquí porque usuarioActual puede llegara después
+
     }
 
     private void cargarEnviosDelUsuario() {

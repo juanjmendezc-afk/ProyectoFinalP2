@@ -20,8 +20,6 @@ public class Envio implements Subject {
 
     private ArrayList<ServicioAdicional> serviciosAdicionales;
     private ArrayList<Incidencia> incidencias;
-
-    // Observadores que serán notificados
     private ArrayList<Observer> observers = new ArrayList<>();
 
     public Envio() {
@@ -30,9 +28,7 @@ public class Envio implements Subject {
         estadoPago = EstadoPago.PENDIENTE;
     }
 
-    public Envio(String id, Direccion origen, Direccion destino,
-                 User repartidor, EstadoEnvio estado,
-                 double pago, EstadoPago estadoPago) {
+    public Envio(String id, Direccion origen, Direccion destino, User repartidor, EstadoEnvio estado, double pago, EstadoPago estadoPago) {
 
         this.id = id;
         this.origen = origen;
@@ -45,8 +41,6 @@ public class Envio implements Subject {
         this.serviciosAdicionales = new ArrayList<>();
         this.incidencias = new ArrayList<>();
     }
-
-    // ====================== MÉTODO AGREGADO ======================
     /**
      * Indica si un envío puede ser asignado.
      * Debe estar pagado o ser contra entrega y seguir en estado PENDIENTE.
@@ -55,8 +49,6 @@ public class Envio implements Subject {
         return (estadoPago == EstadoPago.PAGADO || estadoPago == EstadoPago.CONTRA_ENTREGA)
                 && estado == EstadoEnvio.PENDIENTE;
     }
-
-    // ====================== OBSERVER ======================
 
     @Override
     public void agregarObserver(Observer o) {
@@ -83,21 +75,34 @@ public class Envio implements Subject {
         notificarObservers("El estado cambió a: " + nuevo);
     }
 
-    // ====================== GETTERS & SETTERS ======================
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public Pedido getPedido() {
+        return pedido;
+    }
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+    public Direccion getOrigen() {
+        return origen;
+    }
+    public void setOrigen(Direccion origen) {
+        this.origen = origen;
+    }
+    public Direccion getDestino() {
+        return destino;
+    }
+    public void setDestino(Direccion destino) {
+        this.destino = destino;
+    }
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
-    public Pedido getPedido() { return pedido; }
-    public void setPedido(Pedido pedido) { this.pedido = pedido; }
-
-    public Direccion getOrigen() { return origen; }
-    public void setOrigen(Direccion origen) { this.origen = origen; }
-
-    public Direccion getDestino() { return destino; }
-    public void setDestino(Direccion destino) { this.destino = destino; }
-
-    public User getRepartidor() { return repartidor; }
+    public User getRepartidor() {
+        return repartidor;
+    }
 
     /**
      * Cuando se asigna un repartidor, lo agregamos como observer.
@@ -108,9 +113,9 @@ public class Envio implements Subject {
             agregarObserver(repartidor);
         }
     }
-
-    public EstadoEnvio getEstado() { return estado; }
-
+    public EstadoEnvio getEstado() {
+        return estado;
+    }
     /**
      * Si el estado cambia desde fuera del observer, igual notificamos.
      */
@@ -119,17 +124,27 @@ public class Envio implements Subject {
         notificarObservers("El estado cambió a: " + estado);
     }
 
-    public double getPago() { return pago; }
-    public void setPago(double pago) { this.pago = pago; }
-
-    public EstadoPago getEstadoPago() { return estadoPago; }
-    public void setEstadoPago(EstadoPago estadoPago) { this.estadoPago = estadoPago; }
-
-    public ArrayList<ServicioAdicional> getServiciosAdicionales() { return serviciosAdicionales; }
-    public ArrayList<Incidencia> getIncidencias() { return incidencias; }
-
+    public double getPago() {
+        return pago;
+    }
+    public void setPago(double pago) {
+        this.pago = pago;
+    }
+    public EstadoPago getEstadoPago() {
+        return estadoPago;
+    }
+    public void setEstadoPago(EstadoPago estadoPago) {
+        this.estadoPago = estadoPago;
+    }
+    public ArrayList<ServicioAdicional> getServiciosAdicionales() {
+        return serviciosAdicionales;
+    }
+    public ArrayList<Incidencia> getIncidencias() {
+        return incidencias;
+    }
     public String getEstadoTexto() {
-        return (estado != null) ? estado.toString() : "Sin estado";
+        return (estado != null)
+                ? estado.toString() : "Sin estado";
     }
 
     public String getPagoTexto() {

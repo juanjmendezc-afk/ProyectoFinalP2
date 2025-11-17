@@ -54,7 +54,7 @@ public class MainAdminController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(ruta));
             Parent root = loader.load();
 
-            // ✔ Obtiene el Stage ACTUAL de manera universal, sin riesgo de null
+
             Window window = Stage.getWindows()
                     .stream()
                     .filter(Window::isShowing)

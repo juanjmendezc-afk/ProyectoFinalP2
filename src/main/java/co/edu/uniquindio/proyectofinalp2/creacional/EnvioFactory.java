@@ -5,14 +5,9 @@ import java.util.ArrayList;
 
 public class EnvioFactory {
 
-    public static Envio crearEnvioPagado(
-            String id, Direccion origen, Direccion destino,
-            User cliente, String direccionEntrega, double costo
-    ) {
-        Pedido pedido = new Pedido(
-                "P" + id, cliente, new ArrayList<>(),
-                direccionEntrega, costo, "PENDIENTE"
-        );
+    public static Envio crearEnvioPagado(String id, Direccion origen, Direccion destino, User cliente, String direccionEntrega, double costo) {
+
+        Pedido pedido = new Pedido("P" + id, cliente, new ArrayList<>(), direccionEntrega, costo, "PENDIENTE");
 
         Envio envio = new Envio();
         envio.setId(id);
@@ -29,13 +24,9 @@ public class EnvioFactory {
         return envio;
     }
 
-    public static Envio crearEnvioContraEntrega(
-            String id, Direccion origen, Direccion destino,
-            User cliente, String direccionEntrega, double costo
-    ) {
-        Pedido pedido = new Pedido(
-                "P" + id, cliente, new ArrayList<>(),
-                direccionEntrega, costo, "PENDIENTE"
+    public static Envio crearEnvioContraEntrega(String id, Direccion origen, Direccion destino, User cliente, String direccionEntrega, double costo) {
+
+        Pedido pedido = new Pedido("P" + id, cliente, new ArrayList<>(), direccionEntrega, costo, "PENDIENTE"
         );
 
         Envio envio = new Envio();
@@ -53,12 +44,7 @@ public class EnvioFactory {
         return envio;
     }
 
-    // versión más simple, sin ternario
-    public static Envio crearEnvio(
-            String id, Direccion origen, Direccion destino,
-            User cliente, String direccionEntrega,
-            double costo, boolean pagado
-    ) {
+    public static Envio crearEnvio(String id, Direccion origen, Direccion destino, User cliente, String direccionEntrega, double costo, boolean pagado) {
 
         if (pagado) {
             return crearEnvioPagado(id, origen, destino, cliente, direccionEntrega, costo);

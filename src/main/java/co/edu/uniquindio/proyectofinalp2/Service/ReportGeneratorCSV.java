@@ -11,7 +11,6 @@ public class ReportGeneratorCSV {
 
         try (FileWriter writer = new FileWriter(nombreArchivo)) {
 
-            // Encabezado del archivo CSV
             writer.write("ID;Estado;Pago;Repartidor;Cliente\n");
 
             // Escribir cada envío

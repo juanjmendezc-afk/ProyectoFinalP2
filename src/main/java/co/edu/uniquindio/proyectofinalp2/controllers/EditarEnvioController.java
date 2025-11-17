@@ -14,7 +14,7 @@ public class EditarEnvioController {
     @FXML private TextField txtPago;
 
     private Envio envio;
-    private Runnable refrescarTabla; // ← cambiamos Consumer<Void> por Runnable
+    private Runnable refrescarTabla;
 
     public void setEnvio(Envio e, Runnable refrescar) {
         this.envio = e;
@@ -29,7 +29,6 @@ public class EditarEnvioController {
     private void guardarCambios() {
 
         try {
-            // Origen
             String[] partesOrigen = txtOrigen.getText().split("-");
             if (partesOrigen.length < 2) {
                 alert("Formato inválido para ORIGEN (calle - ciudad)");
@@ -54,7 +53,6 @@ public class EditarEnvioController {
 
             alert("Cambios guardados correctamente.");
 
-            //  ahora sí funciona PERFECTO
             refrescarTabla.run();
 
             cerrar();

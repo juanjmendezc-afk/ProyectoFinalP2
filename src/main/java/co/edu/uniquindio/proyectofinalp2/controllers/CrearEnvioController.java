@@ -71,7 +71,7 @@ public class CrearEnvioController {
                 return;
             }
 
-            // validar método de pago
+            // validar metodo de pago
             if (!rbTarjeta.isSelected() && !rbContraEntrega.isSelected()) {
                 mostrarError("Seleccione un método de pago.");
                 return;

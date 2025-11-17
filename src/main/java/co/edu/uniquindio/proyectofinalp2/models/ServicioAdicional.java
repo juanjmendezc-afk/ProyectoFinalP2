@@ -2,20 +2,17 @@ package co.edu.uniquindio.proyectofinalp2.models;
 
 public class ServicioAdicional {
 
-    private String nombre;      // Ej: "Seguro", "Frágil", "Prioridad"
-    private double costoExtra;  // Costo adicional por el servicio
+    private String nombre;
+    private double costoExtra;
 
-    // Constructor vacío
     public ServicioAdicional() {
     }
 
-    // Constructor con parámetros
     public ServicioAdicional(String nombre, double costoExtra) {
         this.nombre = nombre;
         this.costoExtra = costoExtra;
     }
 
-    // Getters y Setters
     public String getNombre() {
         return nombre;
     }

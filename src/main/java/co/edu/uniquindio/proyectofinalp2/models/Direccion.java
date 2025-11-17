@@ -5,17 +5,15 @@ public class Direccion {
     private String calle;
     private String ciudad;
 
-    // Constructor vacío
+
     public Direccion() {
     }
 
-    // Constructor con parámetros
     public Direccion(String calle, String ciudad) {
         this.calle = calle;
         this.ciudad = ciudad;
     }
 
-    // ===== Getters y Setters =====
     public String getCalle() {
         return calle;
     }
@@ -32,8 +30,6 @@ public class Direccion {
         this.ciudad = ciudad;
     }
 
-    // ===== Métodos compatibles con controladores =====
-    // (algunos controladores usan getDireccion() en lugar de getCalle())
     public String getDireccion() {
         return calle;
     }
@@ -42,7 +38,7 @@ public class Direccion {
         this.calle = direccion;
     }
 
-    // Método para mostrar dirección completa en texto
+    // direccion completa
     @Override
     public String toString() {
         return calle + ", " + ciudad;

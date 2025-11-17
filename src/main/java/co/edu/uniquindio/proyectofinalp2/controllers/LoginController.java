@@ -37,8 +37,7 @@ public class LoginController {
             lblMensaje.setText("Datos incorrectos o usuario no activo.");
             return;
         }
-
-        // Bloqueo de repartidor pendiente
+        //repartidor
         if (user.getEstado().equals("PENDIENTE_APROBACION")) {
             lblMensaje.setText("Su solicitud aún no ha sido aprobada.");
             return;
@@ -58,7 +57,7 @@ public class LoginController {
 
             Parent root = loader.load();
 
-            // 🔥 IMPORTANTE: ENVIAR USUARIO AL CONTROLADOR CORRESPONDIENTE
+            // ENVIAR USUARIO AL CONTROLADOR CORRESPONDIENTE
             Object controller = loader.getController();
 
             if (controller instanceof MainAdminController c1)

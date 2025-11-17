@@ -16,7 +16,6 @@ public class MainUserController {
     @FXML
     private Button btnCerrarSesion;
 
-    // Usuario autenticado (lo envía LoginController)
     private User usuarioActual;
 
     public void setUsuarioActual(User usuario) {
@@ -24,7 +23,7 @@ public class MainUserController {
         System.out.println("Usuario recibido en MainUserController: " + usuario.getNombreCompleto());
     }
 
-    // ========================= COTIZAR ENVÍO =========================
+    // COTIZAR ENVÍO
 
     @FXML
     private void abrirCotizador() {
@@ -34,7 +33,6 @@ public class MainUserController {
         );
     }
 
-    // ========================= CREAR ENVÍO =========================
 
     @FXML
     private void abrirCrearEnvio() {
@@ -58,8 +56,6 @@ public class MainUserController {
         }
     }
 
-    // ========================= GESTIONAR MIS ENVÍOS =========================
-
     @FXML
     private void abrirGestionEnvios() {
         try {
@@ -82,8 +78,6 @@ public class MainUserController {
         }
     }
 
-    // ========================= RASTREAR =========================
-
     @FXML
     private void abrirRastreo() {
         abrirVentanaSimple(
@@ -91,8 +85,6 @@ public class MainUserController {
                 "Rastrear envío"
         );
     }
-
-    // ========================= HISTORIAL =========================
 
     @FXML
     private void abrirHistorial() {
@@ -116,8 +108,6 @@ public class MainUserController {
         }
     }
 
-    // ========================= COMPROBANTES =========================
-
     @FXML
     private void abrirComprobantes() {
         try {
@@ -127,7 +117,7 @@ public class MainUserController {
             Parent root = loader.load();
 
             ComprobantesController controller = loader.getController();
-            controller.setUsuarioActual(usuarioActual); // ✔ corregido
+            controller.setUsuarioActual(usuarioActual);
 
             Stage stage = new Stage();
             stage.setTitle("Comprobantes de Pago");
@@ -139,8 +129,6 @@ public class MainUserController {
             e.printStackTrace();
         }
     }
-
-    // ========================= CERRAR SESIÓN =========================
 
     @FXML
     private void cerrarSesion() {
@@ -160,8 +148,6 @@ public class MainUserController {
             e.printStackTrace();
         }
     }
-
-    // ========================= UTILIDAD =========================
 
     private void abrirVentanaSimple(String rutaFXML, String titulo) {
         try {

@@ -1,8 +1,5 @@
 package co.edu.uniquindio.proyectofinalp2.models;
-
-/**
- * Enumeración que representa los posibles estados de un envío.
- */
+// posibles estados de envio
 public enum EstadoEnvio {
     PENDIENTE,
     EN_CAMINO,

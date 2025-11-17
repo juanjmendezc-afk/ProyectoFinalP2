@@ -1,9 +1,7 @@
 package co.edu.uniquindio.proyectofinalp2.controllers;
 
 import co.edu.uniquindio.proyectofinalp2.comportamiento.*;
-import co.edu.uniquindio.proyectofinalp2.estructural.CostoExtra;
-import co.edu.uniquindio.proyectofinalp2.estructural.EmpaqueEspecialDecorator;
-import co.edu.uniquindio.proyectofinalp2.estructural.SeguroDecorator;
+import co.edu.uniquindio.proyectofinalp2.estructural.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -42,7 +40,7 @@ public class CotizarEnvioController {
             return;
         }
 
-        // === STRATEGY ===
+        // STRATEGY
         CalculadoraCostoEnvio calculadora = new CalculadoraCostoEnvio();
 
         switch (tipo) {
@@ -53,8 +51,8 @@ public class CotizarEnvioController {
 
         double costoBase = calculadora.calcular(destino);
 
-        // === DECORATOR (estructural) ===
-        CostoExtra costo = base -> base;  // sin extras aún
+        // DECORATOR
+        CostoExtra costo = base -> base;  // no extra al inicio
 
         if (chkSeguro.isSelected()) {
             costo = new SeguroDecorator(costo);
@@ -70,7 +68,7 @@ public class CotizarEnvioController {
     }
 
     @FXML
-    private void volver() {
+    public void volver() {
         Stage stage = (Stage) comboTipoPaquete.getScene().getWindow();
         stage.close();
     }
