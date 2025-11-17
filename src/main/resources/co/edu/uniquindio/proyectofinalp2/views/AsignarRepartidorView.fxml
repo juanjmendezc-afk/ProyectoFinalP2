@@ -28,7 +28,6 @@
 
         <Label fx:id="lblMensaje" layoutX="20" layoutY="310" style="-fx-font-weight: bold;"/>
 
-        <!-- 🔙 BOTÓN VOLVER AL MENÚ ADMIN -->
         <Button text="Volver al Menú"
                 layoutX="20"
                 layoutY="350"

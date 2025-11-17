@@ -31,9 +31,7 @@
                 </columns>
             </TableView>
 
-            <!-- ========================= -->
-            <!-- SOLICITUDES PENDIENTES    -->
-            <!-- ========================= -->
+
             <Label text="Solicitudes Pendientes" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
 
             <TableView fx:id="tablaSolicitudes" prefHeight="160" prefWidth="700">
