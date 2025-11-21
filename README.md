@@ -74,10 +74,10 @@ Sistema completo de gestión logística desarrollado en Java con JavaFX para la 
 
 ## 📞 INFORMACIÓN DEL PROYECTO
 
-- **📅 Fecha:** Diciembre 2024
+- **📅 Fecha:** noviembre 16
 - **🎓 Curso:** Programación II
 - **🏫 Universidad:** Uniquindio
-- **👥 Integrantes:** [Tus nombres aquí]
+- **👥 Integrantes:** juan mendez - stiven patiño 
 
 ## 🔗 ENLACES IMPORTANTES
 
